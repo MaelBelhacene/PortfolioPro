@@ -1,5 +1,4 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { useLocation } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion"; // eslint-disable-line no-unused-vars
 
 const defaultBlocks = ["var(--gto-ink)", "var(--gto-red)", "var(--gto-yellow)"];
 
@@ -137,21 +136,22 @@ function ResumeTransition() {
 }
 
 export default function PageTransition({ children, variant = "default" }) {
-  const location = useLocation();
+  const shouldReduceMotion = useReducedMotion();
+
+  if (shouldReduceMotion) {
+    return <div style={{ position: "relative" }}>{children}</div>;
+  }
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.div key={location.pathname} style={{ position: "relative" }}>
-        <TransitionOverlay variant={variant} />
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2, delay: 0.18 }}
-        >
-          {children}
-        </motion.div>
+    <motion.div style={{ position: "relative" }}>
+      <TransitionOverlay variant={variant} />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.2, delay: 0.18 }}
+      >
+        {children}
       </motion.div>
-    </AnimatePresence>
+    </motion.div>
   );
 }

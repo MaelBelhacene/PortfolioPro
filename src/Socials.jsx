@@ -74,7 +74,7 @@ export default function Socials() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [active, navigate, focus]);
+  }, [active, activeInfoBar, navigate, focus]);
 
   return (
     <div id="menu-screen" className="gto-social-screen">

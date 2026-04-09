@@ -60,3 +60,13 @@ body {
   width: 100vw;
   height: 100vh;
 }
+
+.route-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.2) 42%, rgba(0, 0, 0, 0.6)),
+    repeating-linear-gradient(-10deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 9px);
+}
