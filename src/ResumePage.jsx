@@ -2,14 +2,18 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import gtoTransitionVideo from "./assets/gto-transition.mp4";
 
-const ITEMS = [
-  { id: "i", badge: "I", title: "FORMATION", subtitle: "Université / Cursus", rank: 3 },
-  { id: "ii", badge: "II", title: "COMPÉTENCES", subtitle: "Frontend / Design / UI", rank: 4 },
-  { id: "iii", badge: "III", title: "PROJETS", subtitle: "Travaux mis en avant", rank: 5 },
-  { id: "iv", badge: "IV", title: "EXPÉRIENCE", subtitle: "Stages / Rôles", rank: 2 },
-];
-
-const DETAIL_CONTENT = [
+const RESUME_COPY = {
+  fr: {
+    items: [
+      { id: "i", badge: "I", title: "FORMATION", subtitle: "Université / Cursus", rank: 3 },
+      { id: "ii", badge: "II", title: "COMPÉTENCES", subtitle: "Frontend / Design / UI", rank: 4 },
+      { id: "iii", badge: "III", title: "PROJETS", subtitle: "Travaux mis en avant", rank: 5 },
+      { id: "iv", badge: "IV", title: "EXPÉRIENCE", subtitle: "Stages / Rôles", rank: 2 },
+    ],
+    detailsTitle: "DÉTAILS",
+    rankLabel: "RANG",
+    certLabel: "Voir le certificat",
+    detailContent: [
   {
     index: "01",
     title: "FORMATION & CERTIFICATIONS",
@@ -86,13 +90,106 @@ const DETAIL_CONTENT = [
       "- Développement d’applications web (Laravel, Node.js), plateforme de ticketing from scratch, intégration API EasyRedmine et participation ERP Sage X3.",
     ],
   },
-];
+    ],
+  },
+  en: {
+    items: [
+      { id: "i", badge: "I", title: "EDUCATION", subtitle: "University / Track", rank: 3 },
+      { id: "ii", badge: "II", title: "SKILLS", subtitle: "Frontend / Design / UI", rank: 4 },
+      { id: "iii", badge: "III", title: "PROJECTS", subtitle: "Featured work", rank: 5 },
+      { id: "iv", badge: "IV", title: "EXPERIENCE", subtitle: "Roles / Internships", rank: 2 },
+    ],
+    detailsTitle: "DETAILS",
+    rankLabel: "RANK",
+    certLabel: "View certificate",
+    detailContent: [
+      {
+        index: "01",
+        title: "EDUCATION & CERTIFICATIONS",
+        progress: "5/5",
+        rows: [
+          { index: "01", title: "Bachelor in Systems & Networks Administration — CESI (2025-2026)", status: "In progress" },
+          { index: "02", title: "Computer Development Degree (BAC+2) — CESI (2023-2025)", status: "120 ECTS" },
+          {
+            index: "03",
+            title: "Vocational Baccalaureate in Digital Systems — Thomas Edison High School (2020-2023)",
+            status: "Honors",
+            certUrl: "https://drive.google.com/file/d/1zSvIMhioCmwxgUhWl1z6LdgYOTI5zEo_/view?usp=sharing",
+          },
+          {
+            index: "04",
+            title: "Cybercrime Programme — United Nations (2025)",
+            status: "Certified",
+            certUrl: "https://elearningunodc.org/pluginfile.php/1/tool_certificate/issues/1765813175/1774172153MB.pdf",
+          },
+          { index: "05", title: "First Aid at Work (SST) — INRS (2025-2027)", status: "Valid" },
+        ],
+        bullets: [
+          "- Academic focus: LAN/WAN, OSI model, Linux, VMware vSphere and project management.",
+          "- Development stack: PHP/Laravel, Node.js, SQL, Python, C, HTML/CSS/JavaScript, GitHub/GitLab.",
+          "- Training centered on infrastructure, cybersecurity and robust application delivery.",
+        ],
+      },
+      {
+        index: "02",
+        title: "TECHNICAL CORE",
+        progress: "5/5",
+        rows: [
+          { index: "01", title: "Cybersecurity: GRC (ISSP, GDPR, ANSSI), incidents, phishing", status: "Advanced" },
+          { index: "02", title: "Development: PHP/Laravel, Node.js, REST APIs, MVC", status: "Advanced" },
+          { index: "03", title: "Systems & Networks: Linux, Apache/LAMP, VMware, LAN/WAN", status: "Proficient" },
+          { index: "04", title: "Databases: MySQL, data modeling, optimization", status: "Proficient" },
+          { index: "05", title: "Tooling: Linux, VS Code, SentinelOne, Sekoia", status: "Daily use" },
+        ],
+        bullets: [
+          "- Hybrid engineering profile combining software delivery and security hardening.",
+          "- Able to operate across both technical execution and strategic governance topics.",
+          "- Comfortable collaborating with infrastructure, security, and business teams.",
+        ],
+      },
+      {
+        index: "03",
+        title: "PROJECTS & GOALS",
+        progress: "4/4",
+        rows: [
+          { index: "01", title: "Secure user management system", status: "Project" },
+          { index: "02", title: "Ticketing platform with EasyRedmine API integration", status: "Project" },
+          { index: "03", title: "Deployment of defensive controls (EDR/XDR)", status: "Project" },
+          { index: "04", title: "Secure Laravel apps (auth, sessions, roles)", status: "Project" },
+        ],
+        bullets: [
+          "- Career target: grow into cybersecurity and infrastructure management positions.",
+          "- Focus on offensive/defensive security, system architecture, and platform scalability.",
+          "- Practical mindset: reliability, availability, compliance, and continuous improvement.",
+        ],
+      },
+      {
+        index: "04",
+        title: "PROFESSIONAL EXPERIENCE",
+        progress: "4/4",
+        rows: [
+          { index: "01", title: "IT Security Assistant — DOMPLUS Groupe (2026-present)", status: "Current" },
+          { index: "02", title: "IT Infrastructure & Security Administrator (2025-2026)", status: "Completed" },
+          { index: "03", title: "Project & Application Manager (2023-2025)", status: "Completed" },
+          { index: "04", title: "IT & Cloud Technician — PROWEBCE (2023)", status: "Internship" },
+        ],
+        bullets: [
+          "- Implemented security strategy: ISSP, GDPR, ANSSI/CNIL alignment, security committees, and third-party risk management.",
+          "- Rolled out EDR/XDR controls, phishing simulations, internal awareness sessions, and SOC coordination.",
+          "- Built web applications (Laravel, Node.js), developed ticketing from scratch, integrated EasyRedmine API, and contributed to ERP Sage X3.",
+        ],
+      },
+    ],
+  },
+};
 
-export default function ResumePage({ src }) {
+export default function ResumePage({ src, lang = "fr" }) {
+  const locale = lang === "en" ? "en" : "fr";
+  const copy = RESUME_COPY[locale];
   const navigate = useNavigate();
   const [active, setActive] = useState(1);
   const [mounted, setMounted] = useState(false);
-  const currentDetail = DETAIL_CONTENT[active] ?? DETAIL_CONTENT[0];
+  const currentDetail = copy.detailContent[active] ?? copy.detailContent[0];
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 80);
@@ -102,14 +199,14 @@ export default function ResumePage({ src }) {
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "ArrowUp") setActive((i) => Math.max(0, i - 1));
-      if (e.key === "ArrowDown") setActive((i) => Math.min(ITEMS.length - 1, i + 1));
+      if (e.key === "ArrowDown") setActive((i) => Math.min(copy.items.length - 1, i + 1));
       if (e.key === "ArrowLeft") navigate(-1);
       if (e.key === "Escape" || e.key === "Backspace") navigate(-1);
     };
 
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [navigate]);
+  }, [navigate, copy.items.length]);
 
   return (
     <div id="menu-screen" className="gto-resume-screen">
@@ -623,7 +720,7 @@ export default function ResumePage({ src }) {
       <div className="resume-overlay">
         <div className="resume-stack">
           <div className={`resume-list-tag${mounted ? " mounted" : ""}`}>MISSIONS</div>
-          {ITEMS.map((item, index) => (
+          {copy.items.map((item, index) => (
             <div
               key={item.id}
               className={`resume-card-wrap${active === index ? " active" : ""}${mounted ? " mounted" : ""}`}
@@ -642,7 +739,7 @@ export default function ResumePage({ src }) {
                 <div className="resume-card-inner">
                   <div className="resume-title">{item.title}</div>
                   <div className="resume-rank">
-                    <div className="resume-rank-label">RANG</div>
+                    <div className="resume-rank-label">{copy.rankLabel}</div>
                     <div className="resume-rank-number">{item.rank}</div>
                   </div>
                 </div>
@@ -674,8 +771,8 @@ export default function ResumePage({ src }) {
                       href={row.certUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label="Voir le certificat"
-                      title="Voir le certificat"
+                      aria-label={copy.certLabel}
+                      title={copy.certLabel}
                     >
                       +
                     </a>
@@ -686,7 +783,7 @@ export default function ResumePage({ src }) {
           </div>
 
           <div className="resume-detail-bottom">
-            <div className="resume-detail-bottom-title">DÉTAILS</div>
+            <div className="resume-detail-bottom-title">{copy.detailsTitle}</div>
             <div className="resume-detail-bullets">
               {currentDetail.bullets.map((bullet, index) => (
                 <div className="resume-detail-bullet" key={index}>{bullet}</div>

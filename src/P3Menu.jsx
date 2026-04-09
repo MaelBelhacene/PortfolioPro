@@ -1,12 +1,64 @@
 import { useState, useEffect } from "react";
 
-const ITEMS = [
-  { id: "about",   label: "PROFIL",      page: "about",   fontSize: 96, offsetX: 0,  offsetY: 0,  skew: -6,  skewY: 10  },
-  { id: "resume",  label: "PARCOURS",    page: "resume",  fontSize: 78, offsetX: 20, offsetY: 8,  skew: -11, skewY: -10 },
-  { id: "github",  label: "CODE SOURCE", page: "github", href: "https://github.com/MaelBelhacene/PortfolioPro", fontSize: 72, offsetX: 8, offsetY: 6,  skew: 0, skewY: -4  },
-  { id: "socials", label: "RÉSEAUX",     page: "socials", fontSize: 84, offsetX: 16, offsetY: 8,  skew: -3,  skewY: 5   },
-  { id: "sideproj",label: "SIDE QUESTS", page: "sideproj", href: "https://github.com/MaelBelhacene?tab=repositories", fontSize: 64, offsetX: 10, offsetY: 6,  skew: -4,  skewY: 7   },
+const MENU_ITEMS = [
+  {
+    id: "about",
+    labels: { fr: "PROFIL", en: "PROFILE" },
+    page: "about",
+    fontSize: 96,
+    offsetX: 0,
+    offsetY: 0,
+    skew: -6,
+    skewY: 10,
+  },
+  {
+    id: "resume",
+    labels: { fr: "PARCOURS", en: "RESUME" },
+    page: "resume",
+    fontSize: 78,
+    offsetX: 20,
+    offsetY: 8,
+    skew: -11,
+    skewY: -10,
+  },
+  {
+    id: "github",
+    labels: { fr: "CODE SOURCE", en: "SOURCE CODE" },
+    page: "github",
+    href: "https://github.com/MaelBelhacene/PortfolioPro",
+    fontSize: 72,
+    offsetX: 8,
+    offsetY: 6,
+    skew: 0,
+    skewY: -4,
+  },
+  {
+    id: "socials",
+    labels: { fr: "RÉSEAUX", en: "SOCIALS" },
+    page: "socials",
+    fontSize: 84,
+    offsetX: 16,
+    offsetY: 8,
+    skew: -3,
+    skewY: 5,
+  },
+  {
+    id: "sideproj",
+    labels: { fr: "SIDE QUESTS", en: "SIDE QUESTS" },
+    page: "sideproj",
+    href: "https://github.com/MaelBelhacene?tab=repositories",
+    fontSize: 64,
+    offsetX: 10,
+    offsetY: 6,
+    skew: -4,
+    skewY: 7,
+  },
 ];
+
+const MENU_UI = {
+  fr: { nav: "Menu principal", move: "NAVIGUER", confirm: "CONFIRMER", open: "Ouvrir", goTo: "Aller a", newTab: "dans un nouvel onglet" },
+  en: { nav: "Main menu", move: "MOVE", confirm: "CONFIRM", open: "Open", goTo: "Go to", newTab: "in a new tab" },
+};
 
 const CLIP_SHAPES = [
   (w, h) => `polygon(0px 0px, ${w}px ${h * 0.5}px, 0px ${h}px)`,
@@ -16,7 +68,10 @@ const CLIP_SHAPES = [
   (w, h) => `polygon(0px 0px, ${w}px ${h * 0.5}px, 0px ${h}px)`,
 ];
 
-export default function P3Menu({ onNavigate }) {
+export default function P3Menu({ onNavigate, lang = "fr" }) {
+  const locale = lang === "en" ? "en" : "fr";
+  const ui = MENU_UI[locale];
+  const items = MENU_ITEMS.map((item) => ({ ...item, label: item.labels[locale] }));
   const [active, setActive] = useState(0);
   const [mounted, setMounted] = useState(false);
   const [animKey, setAnimKey] = useState(0);
@@ -34,16 +89,16 @@ export default function P3Menu({ onNavigate }) {
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "ArrowUp")   activate(Math.max(0, active - 1));
-      if (e.key === "ArrowDown") activate(Math.min(ITEMS.length - 1, active + 1));
+      if (e.key === "ArrowDown") activate(Math.min(items.length - 1, active + 1));
       if (e.key === "Enter") {
-        const item = ITEMS[active];
+        const item = items[active];
         if (item.href) window.open(item.href, "_blank", "noopener,noreferrer");
         else onNavigate?.(item.page);
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [active, onNavigate]);
+  }, [active, onNavigate, items]);
 
   return (
     <>
@@ -88,6 +143,10 @@ export default function P3Menu({ onNavigate }) {
           justify-content: center;
           line-height: 1;
           text-decoration: none;
+          background: transparent;
+          border: 0;
+          padding: 0;
+          font: inherit;
           opacity: 0;
           transform: translateX(var(--enter-x, 36px));
           transition: opacity 0.38s ease, transform 0.38s cubic-bezier(0.22,1,0.36,1), filter 0.25s ease;
@@ -364,8 +423,8 @@ export default function P3Menu({ onNavigate }) {
         <div className="p3-stripe" />
         <div className="p3-stripe2" />
 
-        <nav className="p3-menu">
-          {ITEMS.map((item, i) => {
+        <nav className="p3-menu" aria-label={ui.nav}>
+          {items.map((item, i) => {
             const isActive = active === i;
             const dist = Math.abs(i - active);
             const dir = i % 2 === 0 ? -1 : 1;
@@ -377,9 +436,9 @@ export default function P3Menu({ onNavigate }) {
             const clipFn = CLIP_SHAPES[i] ?? CLIP_SHAPES[0];
 
             return (
-              <a
+              <button
                 key={item.id}
-                href="#"
+                type="button"
                 className={`p3-row ${isActive ? "active" : ""} ${mounted ? "mounted" : ""}`}
                 style={{
                   "--enter-x": `${dir * 36}px`,
@@ -390,13 +449,14 @@ export default function P3Menu({ onNavigate }) {
                   marginTop: item.offsetY,
                   transitionDelay: mounted ? `${i * 80}ms` : "0ms",
                 }}
-                onClick={(e) => {
-                  e.preventDefault();
+                onClick={() => {
                   if (item.href) window.open(item.href, "_blank", "noopener,noreferrer");
                   else onNavigate?.(item.page);
                 }}
                 onMouseEnter={() => activate(i)}
-                aria-current={isActive ? "page" : undefined}
+                onFocus={() => activate(i)}
+                aria-pressed={isActive}
+                aria-label={item.href ? `${ui.open} ${item.label} ${ui.newTab}` : `${ui.goTo} ${item.label}`}
               >
                 <div className="p3-glow" />
                 <div
@@ -436,14 +496,14 @@ export default function P3Menu({ onNavigate }) {
                     </span>
                   </div>
                 </div>
-              </a>
+              </button>
             );
           })}
         </nav>
 
         <div className={`p3-hint ${mounted ? "mounted" : ""}`}>
-          <div className="p3-hint-row"><span className="p3-hint-key">↑↓</span><span>NAVIGUER</span></div>
-          <div className="p3-hint-row"><span className="p3-hint-key">↵</span><span>CONFIRMER</span></div>
+          <div className="p3-hint-row"><span className="p3-hint-key">↑↓</span><span>{ui.move}</span></div>
+          <div className="p3-hint-row"><span className="p3-hint-key">↵</span><span>{ui.confirm}</span></div>
         </div>
       </div>
     </>

@@ -14,32 +14,76 @@ import mainf from "./assets/mainf.jpeg";
 const CHARS = [char1, char2, char3];
 const MAIN_IMAGES = [mainm, mainm2, mainf];
 
-const REVEAL_CONTENT = [
-  {
-    upper: [
-      "Mael Belhacene",
-      "IT Security Assistant & Développeur Web",
-      "Énergie terrain : rapide, fiable, orienté impact.",
+const ABOUT_COPY = {
+  fr: {
+    revealContent: [
+      {
+        upper: [
+          "Mael Belhacene",
+          "IT Security Assistant & Développeur Web",
+          "Énergie terrain : rapide, fiable, orienté impact.",
+        ],
+        lower: "Voir mes projets • Me contacter",
+      },
+      {
+        upper: [
+          "Actuellement Assistant en sécurité informatique chez DOMPLUS Groupe.",
+          "Étudiant en Bachelor Administrateur Systèmes et Réseaux au CESI.",
+          "Expertise à la croisée du développement applicatif et de la cybersécurité.",
+        ],
+        lower: "Approche : action, discipline et amélioration continue SI",
+      },
+      {
+        upper: [
+          "Objectif : évoluer vers la cybersécurité et le management d’infrastructures.",
+          "Vision orientée performance, sécurité et scalabilité.",
+          "Approche mêlant technique (dev/infra) et stratégie (GRC/conformité).",
+        ],
+        lower: "Roadmap : sécurité offensive/défensive et architecture système",
+      },
     ],
-    lower: "Voir mes projets • Me contacter",
+    footer: {
+      select: "SÉLECTIONNER",
+      show: "AFFICHER",
+      back: "RETOUR",
+    },
+    labels: ["FICHE IDENTITÉ", "MENTALITÉ", "OBJECTIF"],
   },
-  {
-    upper: [
-      "Actuellement Assistant en sécurité informatique chez DOMPLUS Groupe.",
-      "Étudiant en Bachelor Administrateur Systèmes et Réseaux au CESI.",
-      "Expertise à la croisée du développement applicatif et de la cybersécurité.",
+  en: {
+    revealContent: [
+      {
+        upper: [
+          "Mael Belhacene",
+          "IT Security Assistant & Web Developer",
+          "Hands-on mindset: fast execution, reliability, and impact.",
+        ],
+        lower: "Explore my projects • Get in touch",
+      },
+      {
+        upper: [
+          "Currently IT Security Assistant at DOMPLUS Groupe.",
+          "Bachelor student in Systems & Networks Administration at CESI.",
+          "Expertise at the intersection of app development and cybersecurity.",
+        ],
+        lower: "Approach: action, discipline, and continuous IT improvement",
+      },
+      {
+        upper: [
+          "Goal: grow into cybersecurity and infrastructure management roles.",
+          "Vision focused on performance, security, and scalability.",
+          "Method blending technical delivery and governance strategy.",
+        ],
+        lower: "Roadmap: offensive/defensive security and system architecture",
+      },
     ],
-    lower: "Approche : action, discipline et amélioration continue SI",
+    footer: {
+      select: "SELECT",
+      show: "DISPLAY",
+      back: "BACK",
+    },
+    labels: ["PROFILE CARD", "MINDSET", "GOAL"],
   },
-  {
-    upper: [
-      "Objectif : évoluer vers la cybersécurité et le management d’infrastructures.",
-      "Vision orientée performance, sécurité et scalabilité.",
-      "Approche mêlant technique (dev/infra) et stratégie (GRC/conformité).",
-    ],
-    lower: "Roadmap : sécurité offensive/défensive et architecture système",
-  },
-];
+};
 
 const ROLES = [
   { text: "ONI", color: "#ffd230", bg: "rgba(255,210,48,0.12)", border: "rgba(255,210,48,0.5)" },
@@ -74,7 +118,10 @@ const ITEMS = [
   },
 ];
 
-export default function AboutMe() {
+export default function AboutMe({ lang = "fr" }) {
+  const locale = lang === "en" ? "en" : "fr";
+  const copy = ABOUT_COPY[locale];
+  const items = ITEMS.map((item, index) => ({ ...item, label: copy.labels[index] }));
   const [active, setActive]   = useState(0);
   const [mounted, setMounted] = useState(false);
   const [revealed, setRevealed] = useState(false);
@@ -93,7 +140,7 @@ export default function AboutMe() {
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "ArrowUp") setActive(i => Math.max(0, i - 1));
-      if (e.key === "ArrowDown") setActive(i => Math.min(ITEMS.length - 1, i + 1));
+      if (e.key === "ArrowDown") setActive(i => Math.min(items.length - 1, i + 1));
       if (e.key === "Enter") setRevealed(true);
       if (e.key === "ArrowRight") setRevealed(true);
       if (e.key === "ArrowLeft") {
@@ -104,7 +151,7 @@ export default function AboutMe() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [active, navigate, revealed]);
+  }, [active, navigate, revealed, items.length]);
 
   return (
     <div id="menu-screen" className="gto-about-screen">
@@ -113,11 +160,11 @@ export default function AboutMe() {
       {revealed && (
         <div key={`panel-${active}`} className={`sc-reveal-panel${mounted ? " mounted" : ""}`}>
           <div className="sc-reveal-upper-bar">
-            {REVEAL_CONTENT[active].upper.map((line) => (
+            {copy.revealContent[active].upper.map((line) => (
               <div className="sc-reveal-upper-line" key={line}>{line}</div>
             ))}
           </div>
-          <div className="sc-reveal-lower-bar">{REVEAL_CONTENT[active].lower}</div>
+          <div className="sc-reveal-lower-bar">{copy.revealContent[active].lower}</div>
         </div>
       )}
       {revealed && (
@@ -752,7 +799,7 @@ export default function AboutMe() {
       `}</style>
 
       <div className="sc-root" role="navigation">
-        {ITEMS.map((item, i) => (
+        {items.map((item, i) => (
           <div
             key={item.id}
             className={`sc-bar-outer${active === i ? " active" : ""}${mounted ? " mounted" : ""}`}
@@ -788,9 +835,9 @@ export default function AboutMe() {
       </div>
 
       <div className={`sc-footer${mounted ? " mounted" : ""}`}>
-        <div className="sc-footer-row"><span className="sc-footer-key">↑↓</span><span>SÉLECTIONNER</span></div>
-        <div className="sc-footer-row"><span className="sc-footer-key">↵</span><span>AFFICHER</span></div>
-        <div className="sc-footer-row"><span className="sc-footer-key">ESC</span><span>RETOUR</span></div>
+        <div className="sc-footer-row"><span className="sc-footer-key">↑↓</span><span>{copy.footer.select}</span></div>
+        <div className="sc-footer-row"><span className="sc-footer-key">↵</span><span>{copy.footer.show}</span></div>
+        <div className="sc-footer-row"><span className="sc-footer-key">ESC</span><span>{copy.footer.back}</span></div>
       </div>
     </div>
   );

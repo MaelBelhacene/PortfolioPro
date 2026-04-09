@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import char1 from "./assets/char1.png";
 import char2 from "./assets/char2.png";
@@ -8,6 +8,25 @@ import newsign from "./assets/newsign.png";
 import icon1 from "./assets/icon1.png";
 import icon2 from "./assets/icon2.png";
 import icon3 from "./assets/icon3.png";
+
+const SOCIALS_COPY = {
+  fr: {
+    labels: ["GITHUB", "LINKEDIN", "CONTACT"],
+    selectLink: "Selectionner lien",
+    itemOpen: "Ouvrir",
+    itemSelect: "Selectionner",
+    views: "VUES",
+    footer: { select: "SÉLECTIONNER", open: "OUVRIR", back: "RETOUR" },
+  },
+  en: {
+    labels: ["GITHUB", "LINKEDIN", "CONTACT"],
+    selectLink: "Select link",
+    itemOpen: "Open",
+    itemSelect: "Select",
+    views: "VIEWS",
+    footer: { select: "SELECT", open: "OPEN", back: "BACK" },
+  },
+};
 
 const CHARS = [char1, char2, char3];
 
@@ -44,7 +63,13 @@ const ITEMS = [
   },
 ];
 
-export default function Socials() {
+export default function Socials({ lang = "fr" }) {
+  const locale = lang === "en" ? "en" : "fr";
+  const copy = SOCIALS_COPY[locale];
+  const localizedItems = useMemo(
+    () => ITEMS.map((item, index) => ({ ...item, label: copy.labels[index] })),
+    [copy.labels],
+  );
   const [active, setActive]               = useState(0);
   const [mounted, setMounted]             = useState(false);
   const [activeInfoBar, setActiveInfoBar] = useState(0);
@@ -70,21 +95,21 @@ export default function Socials() {
     const onKey = (e) => {
       if (focus === "left") {
         if (e.key === "ArrowUp")    setActive(i => Math.max(0, i - 1));
-        if (e.key === "ArrowDown")  setActive(i => Math.min(ITEMS.length - 1, i + 1));
+        if (e.key === "ArrowDown")  setActive(i => Math.min(localizedItems.length - 1, i + 1));
         if (e.key === "ArrowRight") { setFocus("right"); setActiveInfoBar(0); }
-        if (e.key === "Enter")      window.open(resolveLink(ITEMS[active].href), "_blank");
+        if (e.key === "Enter")      window.open(resolveLink(localizedItems[active].href), "_blank", "noopener,noreferrer");
       } else {
-        const barCount = ITEMS[active].bars;
+        const barCount = localizedItems[active].bars;
         if (e.key === "ArrowUp")   setActiveInfoBar(i => Math.max(0, i - 1));
         if (e.key === "ArrowDown") setActiveInfoBar(i => Math.min(barCount - 1, i + 1));
         if (e.key === "ArrowLeft") setFocus("left");
-        if (e.key === "Enter")     window.open(resolveLink(ITEMS[active].links[activeInfoBar]), "_blank");
+        if (e.key === "Enter")     window.open(resolveLink(localizedItems[active].links[activeInfoBar]), "_blank", "noopener,noreferrer");
       }
       if ((e.key === "ArrowLeft" && focus === "left") || e.key === "Escape" || e.key === "Backspace") navigate(-1);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [active, activeInfoBar, navigate, focus]);
+  }, [active, activeInfoBar, navigate, focus, localizedItems]);
 
   return (
     <div id="menu-screen" className="gto-social-screen">
@@ -134,8 +159,18 @@ export default function Socials() {
         .sc-bar-outer {
           position: relative;
           flex-shrink: 0;
+          display: block;
+          text-align: left;
+          background: transparent;
+          border: 0;
+          padding: 0;
+          font: inherit;
           transform: translateX(-100%);
           transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .sc-bar-outer:focus-visible {
+          outline: 2px solid #ffd230;
+          outline-offset: 4px;
         }
         .sc-bar-outer:hover {
           transform: translateX(4px);
@@ -431,13 +466,21 @@ export default function Socials() {
           right: 0;
           left: 65%;
           height: 46px;
+          display: block;
+          text-align: left;
           background: transparent;
+          border: 0;
           pointer-events: all;
           cursor: pointer;
           z-index: 50;
           padding: 0;
+          font: inherit;
           animation: sc-infobar-in 0.35s cubic-bezier(0.22,1,0.36,1) both;
           transition: transform 0.18s ease;
+        }
+        .sc-info-bar-wrap:focus-visible {
+          outline: 2px solid #ffd230;
+          outline-offset: 4px;
         }
         .sc-info-bar-wrap:hover {
           transform: translateX(-4px);
@@ -642,15 +685,19 @@ export default function Socials() {
       `}</style>
 
       <div className="sc-root" role="navigation">
-        {ITEMS.map((item, i) => (
-          <div
+        {localizedItems.map((item, i) => (
+          <button
+            type="button"
             key={item.id}
             className={`sc-bar-outer${active === i ? " active" : ""}${mounted ? " mounted" : ""}`}
             onClick={() => {
-              if (active === i) window.open(item.href, "_blank");
+              if (active === i) window.open(item.href, "_blank", "noopener,noreferrer");
               else setActive(i);
             }}
             onMouseEnter={() => setActive(i)}
+            onFocus={() => setActive(i)}
+            aria-label={active === i ? `${copy.itemOpen} ${item.label}` : `${copy.itemSelect} ${item.label}`}
+            aria-pressed={active === i}
           >
             <div className="sc-bar-red" />
             <div className="sc-bar">
@@ -681,7 +728,7 @@ export default function Socials() {
                 </div>
               </div>
             </div>
-          </div>
+          </button>
         ))}
       </div>
 
@@ -689,36 +736,40 @@ export default function Socials() {
         <div className="sc-right-nav" key={active}>
           <span className="sc-nav-arrow left">◄</span>
           <span className="sc-nav-btn">LB</span>
-          <span className="sc-nav-label">{ITEMS[active].label}</span>
+          <span className="sc-nav-label">{localizedItems[active].label}</span>
           <span className="sc-nav-btn">RB</span>
           <span className="sc-nav-arrow right">►</span>
         </div>
       )}
 
-      {mounted && Array.from({ length: ITEMS[active].bars }).map((_, i) => (
-        <div
+      {mounted && Array.from({ length: localizedItems[active].bars }).map((_, i) => (
+        <button
+          type="button"
           className={`sc-info-bar-wrap${activeInfoBar === i ? " selected" : ""}`}
           key={`bar-${active}-${i}`}
           style={{ top: `${155 + i * 52}px`, animationDelay: `${i * 50}ms` }}
           onClick={() => setActiveInfoBar(i)}
           onMouseEnter={() => setActiveInfoBar(i)}
+          onFocus={() => setActiveInfoBar(i)}
+          aria-label={`${copy.selectLink} ${i + 1} ${locale === "fr" ? "de" : "for"} ${localizedItems[active].label}`}
+          aria-pressed={activeInfoBar === i}
         >
-          {ITEMS[active].newBars.includes(i) && (
+          {localizedItems[active].newBars.includes(i) && (
             <img className="sc-info-bar-new" src={newsign} alt="" />
           )}
           <div className="sc-info-bar">
-            <img className="sc-info-bar-icon" src={ITEMS[active].barIcon} alt="" />
-            <span className="sc-info-bar-text">{formatInfoText(ITEMS[active].links[i])}</span>
-            <span className="sc-info-bar-box">VUES</span>
-            <span className="sc-info-bar-count">{ITEMS[active].counts[i]}</span>
+            <img className="sc-info-bar-icon" src={localizedItems[active].barIcon} alt="" />
+            <span className="sc-info-bar-text">{formatInfoText(localizedItems[active].links[i])}</span>
+            <span className="sc-info-bar-box">{copy.views}</span>
+            <span className="sc-info-bar-count">{localizedItems[active].counts[i]}</span>
           </div>
-        </div>
+        </button>
       ))}
 
       <div className={`sc-footer${mounted ? " mounted" : ""}`}>
-        <div className="sc-footer-row"><span className="sc-footer-key">↑↓</span><span>SÉLECTIONNER</span></div>
-        <div className="sc-footer-row"><span className="sc-footer-key">↵</span><span>OUVRIR</span></div>
-        <div className="sc-footer-row"><span className="sc-footer-key">ESC</span><span>RETOUR</span></div>
+        <div className="sc-footer-row"><span className="sc-footer-key">↑↓</span><span>{copy.footer.select}</span></div>
+        <div className="sc-footer-row"><span className="sc-footer-key">↵</span><span>{copy.footer.open}</span></div>
+        <div className="sc-footer-row"><span className="sc-footer-key">ESC</span><span>{copy.footer.back}</span></div>
       </div>
     </div>
   );
