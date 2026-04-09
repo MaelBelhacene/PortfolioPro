@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 const ITEMS = [
   { id: "about",   label: "PROFIL",      page: "about",   fontSize: 96, offsetX: 0,  offsetY: 0,  skew: -6,  skewY: 10  },
   { id: "resume",  label: "PARCOURS",    page: "resume",  fontSize: 78, offsetX: 20, offsetY: 8,  skew: -11, skewY: -10 },
-  { id: "github",  label: "CODE SOURCE", page: "github", href: "https://github.com/MaelBelhacene", fontSize: 72, offsetX: 8, offsetY: 6,  skew: 0, skewY: -4  },
+  { id: "github",  label: "CODE SOURCE", page: "github", href: "https://github.com/MaelBelhacene/PortfolioPro", fontSize: 72, offsetX: 8, offsetY: 6,  skew: 0, skewY: -4  },
   { id: "socials", label: "RÉSEAUX",     page: "socials", fontSize: 84, offsetX: 16, offsetY: 8,  skew: -3,  skewY: 5   },
   { id: "sideproj",label: "SIDE QUESTS", page: "sideproj", href: "https://github.com/MaelBelhacene?tab=repositories", fontSize: 64, offsetX: 10, offsetY: 6,  skew: -4,  skewY: 7   },
 ];
@@ -260,15 +260,27 @@ export default function P3Menu({ onNavigate }) {
         }
 
         .gto-overlay .p3-stripe {
-          width: 8px;
-          background: #ffd230;
-          box-shadow: -10px 0 0 #151515;
+          right: 18px;
+          top: 5%;
+          bottom: 5%;
+          width: 7px;
+          border-radius: 2px;
+          clip-path: polygon(0 1.2%, 100% 0, 100% 98.8%, 0 100%);
+          background: linear-gradient(180deg, #fff1b3 0%, #ffd230 28%, #d8a900 100%);
+          box-shadow:
+            -10px 0 0 rgba(16, 16, 16, 0.72),
+            0 0 18px rgba(255, 210, 48, 0.24);
         }
 
         .gto-overlay .p3-stripe2 {
-          right: 12px;
-          width: 3px;
-          background: rgba(211, 40, 40, 0.65);
+          right: 29px;
+          top: 9%;
+          bottom: 9%;
+          width: 2px;
+          border-radius: 2px;
+          clip-path: polygon(0 1.8%, 100% 0, 100% 98.2%, 0 100%);
+          background: linear-gradient(180deg, rgba(255, 158, 158, 0.9) 0%, rgba(211, 40, 40, 0.88) 55%, rgba(120, 14, 14, 0.86) 100%);
+          box-shadow: 0 0 9px rgba(211, 40, 40, 0.32);
         }
 
         .gto-overlay .p3-highlight {
@@ -306,6 +318,21 @@ export default function P3Menu({ onNavigate }) {
             transform: rotate(12deg);
             opacity: 0.86;
           }
+          .gto-overlay .p3-stripe {
+            right: 9px;
+            width: 5px;
+            top: 7%;
+            bottom: 7%;
+            box-shadow:
+              -6px 0 0 rgba(16, 16, 16, 0.66),
+              0 0 11px rgba(255, 210, 48, 0.2);
+          }
+          .gto-overlay .p3-stripe2 {
+            right: 17px;
+            top: 11%;
+            bottom: 11%;
+            width: 2px;
+          }
           .p3-row {
             margin-right: 0 !important;
             margin-top: 2px !important;
@@ -331,7 +358,7 @@ export default function P3Menu({ onNavigate }) {
       <div className="p3-overlay gto-overlay">
         <div className="p3-name-tag">
           <span>MAEL</span>
-          <span>RIDER MODE</span>
+          <span>BELHACENE</span>
         </div>
         <div className="p3-stripe" />
         <div className="p3-stripe2" />

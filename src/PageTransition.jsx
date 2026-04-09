@@ -120,11 +120,12 @@ function ResumeTransition() {
         height: "14vh",
         background: card.color,
         zIndex: 999 - i,
+        pointerEvents: "none",
         clipPath: "polygon(0 0, 97% 0, 100% 100%, 3% 100%)",
         boxShadow: card.color === "var(--gto-paper)" ? "10px 0 0 var(--gto-red)" : "none",
       }}
-      initial={{ x: -900, opacity: 1 }}
-      animate={{ x: [-900, 30, 0, 900] }}
+      initial={{ x: "-120vw", opacity: 1 }}
+      animate={{ x: ["-120vw", "2vw", "0vw", "120vw"], opacity: [1, 1, 1, 0] }}
       transition={{
         duration: 0.6,
         delay: card.delay,

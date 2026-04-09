@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import char1 from "./assets/char1.png";
 import char2 from "./assets/char2.png";
 import char3 from "./assets/char3.png";
-import bgVideo from "./assets/gto-about.mp4";
+import bgVideo from "./assets/video.mp4";
 import icon1 from "./assets/icon1.png";
 import icon2 from "./assets/icon2.png";
 import icon3 from "./assets/icon3.png";
@@ -80,6 +80,11 @@ export default function AboutMe() {
   const [revealed, setRevealed] = useState(false);
   const navigate = useNavigate();
 
+  const openItem = (index) => {
+    setActive(index);
+    setRevealed(true);
+  };
+
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 60);
     return () => clearTimeout(t);
@@ -138,7 +143,7 @@ export default function AboutMe() {
           position: absolute;
           inset: 0;
           z-index: 6;
-          pointer-events: none;
+          pointer-events: auto;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -396,6 +401,8 @@ export default function AboutMe() {
         .sc-bar-outer {
           position: relative;
           flex-shrink: 0;
+          pointer-events: auto;
+          touch-action: manipulation;
           transform: translateX(-100%);
           transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
         }
@@ -646,7 +653,7 @@ export default function AboutMe() {
 
         .gto-about-video {
           object-position: center 30%;
-          transform: scale(0.95);
+          transform: scale(1.03);
           filter: contrast(1.03) saturate(1.04) brightness(0.86);
         }
 
@@ -750,7 +757,13 @@ export default function AboutMe() {
             key={item.id}
             className={`sc-bar-outer${active === i ? " active" : ""}${mounted ? " mounted" : ""}`}
             onClick={() => {
-              setActive(i);
+              openItem(i);
+            }}
+            onPointerDown={() => {
+              openItem(i);
+            }}
+            onTouchStart={() => {
+              openItem(i);
             }}
             onMouseEnter={() => {
               setActive(i);

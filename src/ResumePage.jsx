@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import gtoTransitionVideo from "./assets/gto-transition.mp4";
 
 const ITEMS = [
   { id: "i", badge: "I", title: "FORMATION", subtitle: "Université / Cursus", rank: 3 },
@@ -17,12 +18,12 @@ const DETAIL_CONTENT = [
       { index: "01", title: "Bachelor Administrateur Systèmes & Réseaux — CESI (2025–2026)", status: "En cours" },
       { index: "02", title: "Développement Informatique BAC+2 — CESI (2023–2025)", status: "120 ECTS" },
       { index: "03", title: "Bac Pro Systèmes Numériques — Lycée Thomas Edison (2020–2023)", status: "AB" },
-      { index: "04", title: "Cybercriminalité — United Nations (2025)", status: "Certifié" },
+      { index: "04", title: "Cybercriminalité — United Nations (2025)", status: "Certifié" }, 
       { index: "05", title: "SST — INRS (2025–2027)", status: "Valide" },
     ],
     bullets: [
       "- Compétences académiques : LAN/WAN, modèle OSI, Linux, VMware vSphere et gestion de projet.",
-      "- Développement : PHP/Laravel, Node.js, SQL, Python, C, HTML/CSS/JavaScript, Git/GitLab.",
+      "- Développement : PHP/Laravel, Node.js, SQL, Python, C, HTML/CSS/JavaScript, Github/GitLab.",
       "- Formation orientée infrastructures, cybersécurité et déploiements applicatifs robustes.",
     ],
   },
@@ -35,7 +36,7 @@ const DETAIL_CONTENT = [
       { index: "02", title: "Développement : PHP/Laravel, Node.js, API REST, MVC", status: "Avancé" },
       { index: "03", title: "Systèmes & Réseaux : Linux, Apache/LAMP, VMware, LAN/WAN", status: "Confirmé" },
       { index: "04", title: "Base de données : MySQL, modélisation, optimisation", status: "Confirmé" },
-      { index: "05", title: "Outils : GitLab/GitHub, VS Code, Packet Tracer", status: "Quotidien" },
+      { index: "05", title: "Outils : Linux, VS Code, SentinelOne, Sekoia", status: "Quotidien" },
     ],
     bullets: [
       "- Profil hybride développement + sécurité, orienté performance applicative et durcissement des environnements.",
@@ -50,7 +51,7 @@ const DETAIL_CONTENT = [
     rows: [
       { index: "01", title: "Système de gestion d’utilisateurs sécurisé", status: "Projet" },
       { index: "02", title: "Plateforme de ticketing avec API EasyRedmine", status: "Projet" },
-      { index: "03", title: "Système de vérification SMS", status: "Projet" },
+      { index: "03", title: "Pilotage et déploiement de mesures défensives (EDR/XDR)", status: "Projet" },
       { index: "04", title: "Applications Laravel sécurisées (auth, sessions, rôles)", status: "Projet" },
     ],
     bullets: [
@@ -102,11 +103,22 @@ export default function ResumePage({ src }) {
 
   return (
     <div id="menu-screen" className="gto-resume-screen">
-      <video src={src} autoPlay loop muted playsInline />
+      <video className="resume-bg-video" src={src} autoPlay loop muted playsInline />
       <div className="resume-entry-mask" aria-hidden="true">
-        <video className="resume-entry-video" src={src} autoPlay loop muted playsInline />
+        <video className="resume-entry-video" src={gtoTransitionVideo} autoPlay loop muted playsInline />
       </div>
       <style>{`
+        .resume-bg-video {
+          position: absolute;
+          inset: auto;
+          top: -8%;
+          left: -8%;
+          width: 116%;
+          height: 116%;
+          object-fit: cover;
+          transform: none;
+        }
+
         .resume-entry-mask {
           position: absolute;
           inset: 0;
@@ -120,10 +132,13 @@ export default function ResumePage({ src }) {
 
         .resume-entry-video {
           position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
+          inset: auto;
+          top: -8%;
+          left: -8%;
+          width: 116%;
+          height: 116%;
           object-fit: cover;
+          transform: none;
         }
 
         @keyframes resume-entry-reveal {
@@ -427,20 +442,6 @@ export default function ResumePage({ src }) {
           font-size: 21px;
           line-height: 1.15;
           color: #fff4cc;
-        }
-
-        .gto-resume-screen::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          pointer-events: none;
-          z-index: 11;
-          background: repeating-linear-gradient(
-            -14deg,
-            rgba(255, 210, 48, 0.05) 0 12px,
-            rgba(0, 0, 0, 0) 12px 28px
-          );
-          mix-blend-mode: soft-light;
         }
 
         @media (max-width: 1024px) {
