@@ -89,7 +89,7 @@ export default function P3Menu({ onNavigate }) {
           line-height: 1;
           text-decoration: none;
           opacity: 0;
-          transform: translateX(36px);
+          transform: translateX(var(--enter-x, 36px));
           transition: opacity 0.38s ease, transform 0.38s cubic-bezier(0.22,1,0.36,1), filter 0.25s ease;
         }
         .p3-row.mounted {
@@ -97,7 +97,7 @@ export default function P3Menu({ onNavigate }) {
           transform: translateX(0) !important;
         }
         .p3-row:hover {
-          transform: translateX(-4px) rotate(-0.25deg);
+          transform: translateX(var(--hover-x, -4px)) rotate(var(--hover-rot, -0.25deg));
           filter: saturate(1.08);
         }
         .p3-row:focus-visible {
@@ -334,6 +334,7 @@ export default function P3Menu({ onNavigate }) {
             width: 2px;
           }
           .p3-row {
+            margin-left: 0 !important;
             margin-right: 0 !important;
             margin-top: 2px !important;
           }
@@ -367,6 +368,9 @@ export default function P3Menu({ onNavigate }) {
           {ITEMS.map((item, i) => {
             const isActive = active === i;
             const dist = Math.abs(i - active);
+            const dir = i % 2 === 0 ? -1 : 1;
+            const skewX = Math.max(3, Math.abs(item.skew));
+            const skewY = Math.max(2, Math.abs(item.skewY));
             const opacity = isActive ? 1 : Math.max(0.5, 1 - dist * 0.2);
             const estW = item.label.length * item.fontSize * 0.6 + 80;
             const estH = item.fontSize * 0.94;
@@ -378,7 +382,11 @@ export default function P3Menu({ onNavigate }) {
                 href="#"
                 className={`p3-row ${isActive ? "active" : ""} ${mounted ? "mounted" : ""}`}
                 style={{
-                  marginRight: item.offsetX,
+                  "--enter-x": `${dir * 36}px`,
+                  "--hover-x": `${dir * -4}px`,
+                  "--hover-rot": `${dir * -0.25}deg`,
+                  marginLeft: dir < 0 ? item.offsetX : 0,
+                  marginRight: dir > 0 ? item.offsetX : 0,
                   marginTop: item.offsetY,
                   transitionDelay: mounted ? `${i * 80}ms` : "0ms",
                 }}
@@ -393,7 +401,7 @@ export default function P3Menu({ onNavigate }) {
                 <div className="p3-glow" />
                 <div
                   className="p3-skew-wrap"
-                  style={{ transform: `skewX(${item.skew}deg) skewY(${item.skewY}deg)` }}
+                  style={{ transform: `skewX(${dir * skewX}deg) skewY(${dir * skewY}deg)` }}
                 >
                   <div
                     key={isActive ? `pop-${i}-${animKey}` : `idle-${i}`}

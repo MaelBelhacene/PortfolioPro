@@ -17,8 +17,18 @@ const DETAIL_CONTENT = [
     rows: [
       { index: "01", title: "Bachelor Administrateur Systèmes & Réseaux — CESI (2025–2026)", status: "En cours" },
       { index: "02", title: "Développement Informatique BAC+2 — CESI (2023–2025)", status: "120 ECTS" },
-      { index: "03", title: "Bac Pro Systèmes Numériques — Lycée Thomas Edison (2020–2023)", status: "AB" },
-      { index: "04", title: "Cybercriminalité — United Nations (2025)", status: "Certifié" }, 
+      {
+        index: "03",
+        title: "Bac Pro Systèmes Numériques — Lycée Thomas Edison (2020–2023)",
+        status: "AB",
+        certUrl: "https://drive.google.com/file/d/1zSvIMhioCmwxgUhWl1z6LdgYOTI5zEo_/view?usp=sharing",
+      },
+      {
+        index: "04",
+        title: "Cybercriminalité — United Nations (2025)",
+        status: "Certifié",
+        certUrl: "https://elearningunodc.org/pluginfile.php/1/tool_certificate/issues/1765813175/1774172153MB.pdf",
+      }, 
       { index: "05", title: "SST — INRS (2025–2027)", status: "Valide" },
     ],
     bullets: [
@@ -417,6 +427,36 @@ export default function ResumePage({ src }) {
           padding: 7px 12px;
           clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
         }
+        .resume-detail-status-wrap {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          justify-self: end;
+        }
+        .resume-cert-link {
+          pointer-events: all;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          border: 1px solid rgba(255, 210, 48, 0.75);
+          color: #ffd230;
+          background: rgba(0, 0, 0, 0.32);
+          text-decoration: none;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 12px;
+          line-height: 1;
+          opacity: 0.72;
+          transition: opacity 0.16s ease, transform 0.16s ease;
+        }
+        .resume-cert-link:hover,
+        .resume-cert-link:focus-visible {
+          opacity: 1;
+          transform: translateY(-1px);
+          outline: none;
+        }
         .resume-detail-bottom {
           position: relative;
           margin-top: 22px;
@@ -556,6 +596,14 @@ export default function ResumePage({ src }) {
             font-size: 14px;
             padding: 5px 8px;
           }
+          .resume-detail-status-wrap {
+            gap: 4px;
+          }
+          .resume-cert-link {
+            width: 16px;
+            height: 16px;
+            font-size: 10px;
+          }
           .resume-detail-bottom {
             margin-top: 10px;
             padding: 10px;
@@ -618,7 +666,21 @@ export default function ResumePage({ src }) {
               <div className="resume-detail-row" key={row.index}>
                 <div className="resume-detail-row-index">{row.index}</div>
                 <div className="resume-detail-row-title">{row.title}</div>
-                <div className="resume-detail-status">{row.status}</div>
+                <div className="resume-detail-status-wrap">
+                  <div className="resume-detail-status">{row.status}</div>
+                  {row.certUrl ? (
+                    <a
+                      className="resume-cert-link"
+                      href={row.certUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Voir le certificat"
+                      title="Voir le certificat"
+                    >
+                      +
+                    </a>
+                  ) : null}
+                </div>
               </div>
             ))}
           </div>

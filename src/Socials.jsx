@@ -20,23 +20,23 @@ const ROLES = [
 const ITEMS = [
   {
     id: "twitch", label: "GITHUB", handle: "@mael", href: "https://github.com/MaelBelhacene", icon: "💻", barIcon: icon1, bars: 1, newBars: [0], counts: ["56"],
-    links: ["twitch.tv/videos/2041837265"],
+    links: ["github.com/MaelBelhacene"],
     stats: [
       { tag: "FOL", value: "1.2K", color: "#9147ff" },
       { tag: "VWR", value: "042",  color: "#ffd230" },
     ],
   },
   {
-    id: "instagram", label: "LINKEDIN", handle: "@mael", href: "https://www.linkedin.com/", icon: "💼", barIcon: icon2, bars: 5, newBars: [1, 2], counts: ["3.4M", "2.5M", "676K", "412K", "198K"],
-    links: ["instagram.com/p/C4xQmRrNk2a", "instagram.com/p/C3wLpBsOj7f", "instagram.com/reel/C2vKoArMi6e", "instagram.com/p/C1uJnZqLh5d", "instagram.com/reel/C0tImYpKg4c"],
+    id: "instagram", label: "LINKEDIN", handle: "@mael", href: "https://www.linkedin.com/in/mael-belhacene-89545b294/", icon: "💼", barIcon: icon2, bars: 1, newBars: [0], counts: ["PRO"],
+    links: ["www.linkedin.com/in/mael-belhacene-89545b294/"],
     stats: [
       { tag: "FOL", value: "3.4K", color: "#d32828" },
       { tag: "PST", value: "128",  color: "#ffd230" },
     ],
   },
   {
-    id: "tiktok", label: "CONTACT", handle: "@mael", href: "https://github.com/MaelBelhacene", icon: "📨", barIcon: icon3, bars: 7, newBars: [0, 3, 5, 6], counts: ["5.1M", "3.7M", "2.2M", "1.4M", "831K", "490K", "217K"],
-    links: ["tiktok.com/@yourhandle/video/7318492016374859054", "tiktok.com/@yourhandle/video/7305837261940183342", "tiktok.com/@yourhandle/video/7291046385720348974", "tiktok.com/@yourhandle/video/7278392047163820334", "tiktok.com/@yourhandle/video/7264819203847165742", "tiktok.com/@yourhandle/video/7251047382916430126", "tiktok.com/@yourhandle/video/7237294018463851822"],
+    id: "tiktok", label: "CONTACT", handle: "@mael", href: "mailto:maelbelhacene38.pro@gmail.com", icon: "📨", barIcon: icon3, bars: 1, newBars: [0], counts: ["OPEN"],
+    links: ["mailto:maelbelhacene38.pro@gmail.com - Ouvert a toute collaboration commerciale"],
     stats: [
       { tag: "FOL", value: "8.9K", color: "#ffd230" },
       { tag: "LKS", value: "52K",  color: "#d32828" },
@@ -51,6 +51,16 @@ export default function Socials() {
   const [focus, setFocus]                 = useState("left"); // "left" | "right"
   const navigate = useNavigate();
 
+  const resolveLink = (rawLink) => {
+    if (/^(https?:\/\/|mailto:)/i.test(rawLink)) return rawLink;
+    return "https://" + rawLink;
+  };
+
+  const formatInfoText = (text) => {
+    const maxLength = 64;
+    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+  };
+
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 60);
     return () => clearTimeout(t);
@@ -62,13 +72,13 @@ export default function Socials() {
         if (e.key === "ArrowUp")    setActive(i => Math.max(0, i - 1));
         if (e.key === "ArrowDown")  setActive(i => Math.min(ITEMS.length - 1, i + 1));
         if (e.key === "ArrowRight") { setFocus("right"); setActiveInfoBar(0); }
-        if (e.key === "Enter")      window.open(ITEMS[active].href, "_blank");
+        if (e.key === "Enter")      window.open(resolveLink(ITEMS[active].href), "_blank");
       } else {
         const barCount = ITEMS[active].bars;
         if (e.key === "ArrowUp")   setActiveInfoBar(i => Math.max(0, i - 1));
         if (e.key === "ArrowDown") setActiveInfoBar(i => Math.min(barCount - 1, i + 1));
         if (e.key === "ArrowLeft") setFocus("left");
-        if (e.key === "Enter")     window.open("https://" + ITEMS[active].links[activeInfoBar], "_blank");
+        if (e.key === "Enter")     window.open(resolveLink(ITEMS[active].links[activeInfoBar]), "_blank");
       }
       if ((e.key === "ArrowLeft" && focus === "left") || e.key === "Escape" || e.key === "Backspace") navigate(-1);
     };
@@ -698,7 +708,7 @@ export default function Socials() {
           )}
           <div className="sc-info-bar">
             <img className="sc-info-bar-icon" src={ITEMS[active].barIcon} alt="" />
-            <span className="sc-info-bar-text">{ITEMS[active].links[i].slice(0, 10)}...</span>
+            <span className="sc-info-bar-text">{formatInfoText(ITEMS[active].links[i])}</span>
             <span className="sc-info-bar-box">VUES</span>
             <span className="sc-info-bar-count">{ITEMS[active].counts[i]}</span>
           </div>
