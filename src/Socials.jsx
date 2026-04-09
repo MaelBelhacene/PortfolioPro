@@ -16,6 +16,7 @@ const SOCIALS_COPY = {
     itemOpen: "Ouvrir",
     itemSelect: "Selectionner",
     views: "VUES",
+    openCount: "OUVERT",
     footer: { select: "SÉLECTIONNER", open: "OUVRIR", back: "RETOUR" },
   },
   en: {
@@ -24,6 +25,7 @@ const SOCIALS_COPY = {
     itemOpen: "Open",
     itemSelect: "Select",
     views: "VIEWS",
+    openCount: "OPEN",
     footer: { select: "SELECT", open: "OPEN", back: "BACK" },
   },
 };
@@ -67,8 +69,12 @@ export default function Socials({ lang = "fr" }) {
   const locale = lang === "en" ? "en" : "fr";
   const copy = SOCIALS_COPY[locale];
   const localizedItems = useMemo(
-    () => ITEMS.map((item, index) => ({ ...item, label: copy.labels[index] })),
-    [copy.labels],
+    () => ITEMS.map((item, index) => ({
+      ...item,
+      label: copy.labels[index],
+      counts: item.id === "tiktok" ? [copy.openCount] : item.counts,
+    })),
+    [copy.labels, copy.openCount],
   );
   const [active, setActive]               = useState(0);
   const [mounted, setMounted]             = useState(false);

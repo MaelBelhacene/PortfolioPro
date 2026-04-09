@@ -48,6 +48,7 @@ const ABOUT_COPY = {
       back: "RETOUR",
     },
     labels: ["FICHE IDENTITÉ", "MENTALITÉ", "OBJECTIF"],
+    roles: ["ONI", "FLUX", "OBJECTIF"],
   },
   en: {
     revealContent: [
@@ -82,13 +83,14 @@ const ABOUT_COPY = {
       back: "BACK",
     },
     labels: ["PROFILE CARD", "MINDSET", "GOAL"],
+    roles: ["ONI", "FLOW", "GOAL"],
   },
 };
 
-const ROLES = [
-  { text: "ONI", color: "#ffd230", bg: "rgba(255,210,48,0.12)", border: "rgba(255,210,48,0.5)" },
-  { text: "FLOW", color: "#d32828", bg: "rgba(211,40,40,0.12)", border: "rgba(211,40,40,0.45)" },
-  { text: "GOAL", color: "#ffd230", bg: "rgba(255,210,48,0.12)", border: "rgba(255,210,48,0.5)" },
+const BASE_ROLES = [
+  { color: "#ffd230", bg: "rgba(255,210,48,0.12)", border: "rgba(255,210,48,0.5)" },
+  { color: "#d32828", bg: "rgba(211,40,40,0.12)", border: "rgba(211,40,40,0.45)" },
+  { color: "#ffd230", bg: "rgba(255,210,48,0.12)", border: "rgba(255,210,48,0.5)" },
 ];
 
 const ITEMS = [
@@ -122,6 +124,7 @@ export default function AboutMe({ lang = "fr" }) {
   const locale = lang === "en" ? "en" : "fr";
   const copy = ABOUT_COPY[locale];
   const items = ITEMS.map((item, index) => ({ ...item, label: copy.labels[index] }));
+  const roles = BASE_ROLES.map((role, index) => ({ ...role, text: copy.roles[index] }));
   const [active, setActive]   = useState(0);
   const [mounted, setMounted] = useState(false);
   const [revealed, setRevealed] = useState(false);
@@ -822,7 +825,7 @@ export default function AboutMe({ lang = "fr" }) {
               <div className="sc-bar-fill" />
               <div className="sc-bar-shade" />
               <div className="sc-bar-content">
-                <div className="sc-role">{ROLES[i].text}</div>
+                <div className="sc-role">{roles[i].text}</div>
                 <div className="sc-main">
                   <div className="sc-main-top">
                     <div className="sc-label">{item.label}</div>

@@ -44,7 +44,7 @@ const MENU_ITEMS = [
   },
   {
     id: "sideproj",
-    labels: { fr: "SIDE QUESTS", en: "SIDE QUESTS" },
+    labels: { fr: "PROJETS BONUS", en: "SIDE QUESTS" },
     page: "sideproj",
     href: "https://github.com/MaelBelhacene?tab=repositories",
     fontSize: 64,
