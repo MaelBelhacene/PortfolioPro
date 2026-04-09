@@ -27,6 +27,7 @@ Objectif : se démarquer des portfolios classiques en combinant développement f
 * Optimisation des performances (lazy loading, découpage des composants)
 * Gestion des animations synchronisées avec l’UI
 * Architecture modulaire React
+* Site web 100% responsive
 
 ---
 
