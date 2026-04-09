@@ -5,9 +5,6 @@ import char2 from "./assets/char2.png";
 import char3 from "./assets/char3.png";
 import bgVideo from "./assets/gto.mp4";
 import newsign from "./assets/newsign.png";
-import icon1 from "./assets/icon1.png";
-import icon2 from "./assets/icon2.png";
-import icon3 from "./assets/icon3.png";
 
 const SOCIALS_COPY = {
   fr: {
@@ -15,8 +12,6 @@ const SOCIALS_COPY = {
     selectLink: "Selectionner lien",
     itemOpen: "Ouvrir",
     itemSelect: "Selectionner",
-    views: "VUES",
-    openCount: "OUVERT",
     footer: { select: "SÉLECTIONNER", open: "OUVRIR", back: "RETOUR" },
   },
   en: {
@@ -24,8 +19,6 @@ const SOCIALS_COPY = {
     selectLink: "Select link",
     itemOpen: "Open",
     itemSelect: "Select",
-    views: "VIEWS",
-    openCount: "OPEN",
     footer: { select: "SELECT", open: "OPEN", back: "BACK" },
   },
 };
@@ -40,28 +33,16 @@ const ROLES = [
 
 const ITEMS = [
   {
-    id: "twitch", label: "GITHUB", handle: "@mael", href: "https://github.com/MaelBelhacene", icon: "💻", barIcon: icon1, bars: 1, newBars: [0], counts: ["56"],
+    id: "twitch", label: "GITHUB", handle: "@mael", href: "https://github.com/MaelBelhacene", icon: "💻", bars: 1, newBars: [0],
     links: ["github.com/MaelBelhacene"],
-    stats: [
-      { tag: "FOL", value: "1.2K", color: "#9147ff" },
-      { tag: "VWR", value: "042",  color: "#ffd230" },
-    ],
   },
   {
-    id: "instagram", label: "LINKEDIN", handle: "@mael", href: "https://www.linkedin.com/in/mael-belhacene-89545b294/", icon: "💼", barIcon: icon2, bars: 1, newBars: [0], counts: ["PRO"],
+    id: "instagram", label: "LINKEDIN", handle: "@mael", href: "https://www.linkedin.com/in/mael-belhacene-89545b294/", icon: "💼", bars: 1, newBars: [0],
     links: ["www.linkedin.com/in/mael-belhacene-89545b294/"],
-    stats: [
-      { tag: "FOL", value: "3.4K", color: "#d32828" },
-      { tag: "PST", value: "128",  color: "#ffd230" },
-    ],
   },
   {
-    id: "tiktok", label: "CONTACT", handle: "@mael", href: "mailto:maelbelhacene38.pro@gmail.com", icon: "📨", barIcon: icon3, bars: 1, newBars: [0], counts: ["OPEN"],
+    id: "tiktok", label: "CONTACT", handle: "@mael", href: "mailto:maelbelhacene38.pro@gmail.com", icon: "📨", bars: 1, newBars: [0],
     links: ["mailto:maelbelhacene38.pro@gmail.com - Ouvert a toute collaboration commerciale"],
-    stats: [
-      { tag: "FOL", value: "8.9K", color: "#ffd230" },
-      { tag: "LKS", value: "52K",  color: "#d32828" },
-    ],
   },
 ];
 
@@ -72,9 +53,8 @@ export default function Socials({ lang = "fr" }) {
     () => ITEMS.map((item, index) => ({
       ...item,
       label: copy.labels[index],
-      counts: item.id === "tiktok" ? [copy.openCount] : item.counts,
     })),
-    [copy.labels, copy.openCount],
+    [copy.labels],
   );
   const [active, setActive]               = useState(0);
   const [mounted, setMounted]             = useState(false);
@@ -336,67 +316,6 @@ export default function Socials({ lang = "fr" }) {
         .sc-nav-arrow.left  { animation: sc-arrow-left  0.8s ease-in-out infinite; }
         .sc-nav-arrow.right { animation: sc-arrow-right 0.8s ease-in-out infinite; }
 
-        /* right: stats group */
-        .sc-stats {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          padding-right: 24px;
-          flex-shrink: 0;
-        }
-
-        .sc-stat {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-        }
-
-        .sc-stat-top {
-          display: flex;
-          align-items: baseline;
-          gap: 4px;
-        }
-
-        .sc-stat-tag {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 9px;
-          letter-spacing: 1.5px;
-          padding: 1px 4px;
-          border-width: 1px;
-          border-style: solid;
-          line-height: 1.4;
-          user-select: none;
-        }
-
-        .sc-stat-num {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 26px;
-          font-style: italic;
-          line-height: 1;
-          color: #fff4cc;
-          letter-spacing: 1px;
-          user-select: none;
-          transition: color 0.2s ease;
-        }
-        .sc-bar-outer.active .sc-stat-num { color: #111111; }
-
-        .sc-stat-bars {
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          gap: 1px;
-          margin-top: 2px;
-        }
-        .sc-stat-bar-color {
-          height: 3px;
-          width: 100%;
-        }
-        .sc-stat-bar-black {
-          height: 2px;
-          width: 100%;
-          background: #000;
-        }
-
         /* character portrait */
         .sc-char {
           position: absolute;
@@ -535,42 +454,6 @@ export default function Socials({ lang = "fr" }) {
           padding: 0 14px;
           user-select: none;
         }
-        .sc-info-bar-box {
-          height: 70%;
-          background: #1a1a1a;
-          display: flex;
-          align-items: center;
-          padding: 0 12px;
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 20px;
-          letter-spacing: 1px;
-          color: #fff;
-          flex-shrink: 0;
-          border-radius: 6px;
-          margin-right: 4px;
-          user-select: none;
-        }
-
-        .sc-info-bar-icon {
-          height: 55%;
-          width: auto;
-          flex-shrink: 0;
-          margin-left: 14px;
-          object-fit: contain;
-          pointer-events: none;
-          user-select: none;
-        }
-
-        .sc-info-bar-count {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 22px;
-          letter-spacing: 1px;
-          color: #111;
-          margin-right: 80px;
-          flex-shrink: 0;
-          user-select: none;
-        }
-
         /* footer hints */
         .sc-footer {
           position: fixed;
@@ -643,8 +526,7 @@ export default function Socials({ lang = "fr" }) {
           .sc-bar-outer.active .sc-bar-red {
             height: 68px;
           }
-          .sc-char,
-          .sc-stats {
+          .sc-char {
             display: none;
           }
           .sc-role {
@@ -673,13 +555,6 @@ export default function Socials({ lang = "fr" }) {
             font-size: 15px;
             letter-spacing: 1px;
             padding: 0 8px;
-          }
-          .sc-info-bar-box,
-          .sc-info-bar-count {
-            font-size: 14px;
-          }
-          .sc-info-bar-count {
-            margin-right: 14px;
           }
           .sc-footer {
             right: 8px;
@@ -718,20 +593,6 @@ export default function Socials({ lang = "fr" }) {
                     <div className="sc-label">{item.label}</div>
                   </div>
                 </div>
-                <div className="sc-stats">
-                  {item.stats.map(s => (
-                    <div className="sc-stat" key={s.tag}>
-                      <div className="sc-stat-top">
-                        <span className="sc-stat-tag" style={{ color: s.color, borderColor: s.color }}>{s.tag}</span>
-                        <span className="sc-stat-num">{s.value}</span>
-                      </div>
-                      <div className="sc-stat-bars">
-                        <div className="sc-stat-bar-color" style={{ background: s.color }} />
-                        <div className="sc-stat-bar-black" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           </button>
@@ -764,10 +625,7 @@ export default function Socials({ lang = "fr" }) {
             <img className="sc-info-bar-new" src={newsign} alt="" />
           )}
           <div className="sc-info-bar">
-            <img className="sc-info-bar-icon" src={localizedItems[active].barIcon} alt="" />
             <span className="sc-info-bar-text">{formatInfoText(localizedItems[active].links[i])}</span>
-            <span className="sc-info-bar-box">{copy.views}</span>
-            <span className="sc-info-bar-count">{localizedItems[active].counts[i]}</span>
           </div>
         </button>
       ))}
