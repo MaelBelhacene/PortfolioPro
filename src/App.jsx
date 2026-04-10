@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect } from 'react'
+import { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import { Routes, Route, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import menuVideo from './assets/gto.mp4'
@@ -10,6 +10,8 @@ import './App.css'
 const AboutMe = lazy(() => import('./AboutMe'))
 const ResumePage = lazy(() => import('./ResumePage'))
 const Socials = lazy(() => import('./Socials'))
+const MUSIC_STORAGE_KEY = 'gto-music-enabled'
+const MUSIC_SRC = '/music.mp3'
 
 function RouteLoader() {
   return <div className="route-loader" aria-hidden="true" />
@@ -41,6 +43,64 @@ function LanguageSwitch() {
       <span className={`lang-switch-chip ${currentLang === 'fr' ? 'active' : ''}`}>FR</span>
       <span className={`lang-switch-chip ${currentLang === 'en' ? 'active' : ''}`}>EN</span>
     </button>
+  )
+}
+
+function MusicToggle() {
+  const location = useLocation()
+  const audioRef = useRef(null)
+  const [enabled, setEnabled] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return window.localStorage.getItem(MUSIC_STORAGE_KEY) === '1'
+  })
+
+  const segments = location.pathname.split('/').filter(Boolean)
+  const currentLang = getLocale(segments[0])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    window.localStorage.setItem(MUSIC_STORAGE_KEY, enabled ? '1' : '0')
+  }, [enabled])
+
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    audio.volume = 0.28
+    audio.loop = true
+
+    if (!enabled) {
+      audio.pause()
+      audio.currentTime = 0
+      return
+    }
+
+    const playPromise = audio.play()
+    if (playPromise?.catch) {
+      playPromise.catch(() => {
+        setEnabled(false)
+      })
+    }
+  }, [enabled])
+
+  return (
+    <>
+      <audio ref={audioRef} src={MUSIC_SRC} preload="none" />
+      <button
+        type="button"
+        className="music-switch"
+        onClick={() => setEnabled((v) => !v)}
+        aria-pressed={enabled}
+        aria-label={
+          currentLang === 'fr'
+            ? (enabled ? 'Couper la musique' : 'Activer la musique')
+            : (enabled ? 'Disable music' : 'Enable music')
+        }
+      >
+        <span className="music-switch-icon" aria-hidden="true">♫</span>
+        <span className={`music-switch-chip ${enabled ? 'active' : ''}`}>{enabled ? 'ON' : 'OFF'}</span>
+      </button>
+    </>
   )
 }
 
@@ -104,8 +164,10 @@ function AnimatedRoutes() {
   )
 
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
+    <>
+      <MusicToggle />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Navigate to="/fr" replace />} />
         <Route path="/about" element={<Navigate to="/fr/about" replace />} />
         <Route path="/resume" element={<Navigate to="/fr/resume" replace />} />
@@ -141,8 +203,9 @@ function AnimatedRoutes() {
         } />
 
         <Route path="*" element={<Navigate to="/fr" replace />} />
-      </Routes>
-    </AnimatePresence>
+        </Routes>
+      </AnimatePresence>
+    </>
   )
 }
 
