@@ -52,7 +52,7 @@ Objectif : se démarquer des portfolios classiques en combinant développement f
 
 ## 🌐 Live
 
-https://portfoliopro-maels-projects-1a1fd4a3.vercel.app/
+https://maelbelhacene.com
 
 
 ---
