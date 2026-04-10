@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useLocation, useNavigate, useParams } from 're
 import { AnimatePresence } from 'framer-motion'
 import menuVideo from './assets/gto.mp4'
 import resumeVideo from './assets/video.mp4'
+import musicFile from './assets/music.mp3'
 import P3Menu from './P3Menu'
 import PageTransition from './PageTransition'
 import './App.css'
@@ -11,7 +12,20 @@ const AboutMe = lazy(() => import('./AboutMe'))
 const ResumePage = lazy(() => import('./ResumePage'))
 const Socials = lazy(() => import('./Socials'))
 const MUSIC_STORAGE_KEY = 'gto-music-enabled'
-const MUSIC_SRC = '/music.mp3'
+let sharedMusicAudio = null
+
+function getSharedMusicAudio() {
+  if (typeof window === 'undefined') return null
+
+  if (!sharedMusicAudio) {
+    sharedMusicAudio = new window.Audio(musicFile)
+    sharedMusicAudio.volume = 0.28
+    sharedMusicAudio.loop = true
+    sharedMusicAudio.preload = 'auto'
+  }
+
+  return sharedMusicAudio
+}
 
 function RouteLoader() {
   return <div className="route-loader" aria-hidden="true" />
@@ -58,6 +72,10 @@ function MusicToggle() {
   const currentLang = getLocale(segments[0])
 
   useEffect(() => {
+    audioRef.current = getSharedMusicAudio()
+  }, [])
+
+  useEffect(() => {
     if (typeof window === 'undefined') return
     window.localStorage.setItem(MUSIC_STORAGE_KEY, enabled ? '1' : '0')
   }, [enabled])
@@ -66,12 +84,8 @@ function MusicToggle() {
     const audio = audioRef.current
     if (!audio) return
 
-    audio.volume = 0.28
-    audio.loop = true
-
     if (!enabled) {
       audio.pause()
-      audio.currentTime = 0
       return
     }
 
@@ -83,13 +97,37 @@ function MusicToggle() {
     }
   }, [enabled])
 
+  function handleMusicToggle() {
+    const audio = audioRef.current ?? getSharedMusicAudio()
+    if (!audio) {
+      setEnabled((v) => !v)
+      return
+    }
+
+    if (enabled) {
+      audio.pause()
+      setEnabled(false)
+      return
+    }
+
+    const playPromise = audio.play()
+
+    if (playPromise?.then) {
+      playPromise
+        .then(() => setEnabled(true))
+        .catch(() => setEnabled(false))
+      return
+    }
+
+    setEnabled(true)
+  }
+
   return (
     <>
-      <audio ref={audioRef} src={MUSIC_SRC} preload="none" />
       <button
         type="button"
         className="music-switch"
-        onClick={() => setEnabled((v) => !v)}
+        onClick={handleMusicToggle}
         aria-pressed={enabled}
         aria-label={
           currentLang === 'fr'
