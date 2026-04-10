@@ -19,21 +19,21 @@ const RESUME_COPY = {
     title: "FORMATION & CERTIFICATIONS",
     progress: "5/5",
     rows: [
-      { index: "01", title: "Bachelor Administrateur Systèmes & Réseaux — CESI (2025–2026)", status: "En cours" },
-      { index: "02", title: "Développement Informatique BAC+2 — CESI (2023–2025)", status: "120 ECTS" },
+      { index: "01", title: "Master Manager en Infrastructures et Cybersécurité des SI — CESI (2026–2028)", status: "À venir" },
+      { index: "02", title: "Bachelor Administrateur Systèmes & Réseaux — CESI (2025–2026)", status: "En cours" },
+      { index: "03", title: "Développement Informatique BAC+2 — CESI (2023–2025)", status: "120 ECTS" },
       {
-        index: "03",
+        index: "04",
         title: "Bac Pro Systèmes Numériques — Lycée Thomas Edison (2020–2023)",
         status: "AB",
         certUrl: "https://drive.google.com/file/d/1zSvIMhioCmwxgUhWl1z6LdgYOTI5zEo_/view?usp=sharing",
       },
       {
-        index: "04",
+        index: "05",
         title: "Cybercriminalité — United Nations (2025)",
         status: "Certifié",
         certUrl: "https://elearningunodc.org/pluginfile.php/1/tool_certificate/issues/1765813175/1774172153MB.pdf",
-      }, 
-      { index: "05", title: "SST — INRS (2025–2027)", status: "Valide" },
+      },
     ],
     bullets: [
       "- Compétences académiques : LAN/WAN, modèle OSI, Linux, VMware vSphere et gestion de projet.",
@@ -108,21 +108,21 @@ const RESUME_COPY = {
         title: "EDUCATION & CERTIFICATIONS",
         progress: "5/5",
         rows: [
-          { index: "01", title: "Bachelor in Systems & Networks Administration — CESI (2025-2026)", status: "In progress" },
-          { index: "02", title: "Computer Development Degree (BAC+2) — CESI (2023-2025)", status: "120 ECTS" },
+          { index: "01", title: "Master Manager in Infrastructure and Information Systems Cybersecurity — CESI (2026-2028)", status: "Upcoming" },
+          { index: "02", title: "Bachelor in Systems & Networks Administration — CESI (2025-2026)", status: "In progress" },
+          { index: "03", title: "Computer Development Degree (BAC+2) — CESI (2023-2025)", status: "120 ECTS" },
           {
-            index: "03",
+            index: "04",
             title: "Vocational Baccalaureate in Digital Systems — Thomas Edison High School (2020-2023)",
             status: "Honors",
             certUrl: "https://drive.google.com/file/d/1zSvIMhioCmwxgUhWl1z6LdgYOTI5zEo_/view?usp=sharing",
           },
           {
-            index: "04",
+            index: "05",
             title: "Cybercrime Programme — United Nations (2025)",
             status: "Certified",
             certUrl: "https://elearningunodc.org/pluginfile.php/1/tool_certificate/issues/1765813175/1774172153MB.pdf",
           },
-          { index: "05", title: "First Aid at Work (SST) — INRS (2025-2027)", status: "Valid" },
         ],
         bullets: [
           "- Academic focus: LAN/WAN, OSI model, Linux, VMware vSphere and project management.",
@@ -605,11 +605,11 @@ export default function ResumePage({ src, lang = "fr" }) {
           .resume-overlay {
             overflow-y: auto;
             overflow-x: hidden;
-            padding: 4vh 0 12px;
+            padding: 6vh 0 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             pointer-events: all;
           }
           .resume-stack {
@@ -621,14 +621,20 @@ export default function ResumePage({ src, lang = "fr" }) {
             gap: 8px;
           }
           .resume-list-tag {
-            font-size: 56px;
+            font-size: clamp(42px, 11vw, 56px);
             margin-left: 4px;
           }
           .resume-card {
-            height: 86px;
+            height: auto;
+            min-height: 96px;
           }
           .resume-card-inner {
-            padding: 10px 12px 10px 44px;
+            position: relative;
+            padding: 10px 10px 34px 44px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: start;
+            gap: 4px 8px;
           }
           .resume-badge {
             width: 40px;
@@ -639,17 +645,20 @@ export default function ResumePage({ src, lang = "fr" }) {
             font-size: 24px;
           }
           .resume-title {
-            font-size: 29px;
+            font-size: clamp(25px, 6.8vw, 33px);
             letter-spacing: 0.5px;
+            line-height: 0.92;
           }
           .resume-rank {
             gap: 6px;
+            margin-top: 0;
+            align-items: baseline;
           }
           .resume-rank-label {
-            font-size: 18px;
+            font-size: 16px;
           }
           .resume-rank-number {
-            font-size: 40px;
+            font-size: 36px;
           }
           .resume-subtitle-bar {
             left: 42px;
@@ -659,7 +668,10 @@ export default function ResumePage({ src, lang = "fr" }) {
             padding: 0 10px;
           }
           .resume-subtitle {
-            font-size: 18px;
+            font-size: clamp(14px, 4.6vw, 18px);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
           .resume-detail-panel {
             position: relative;
@@ -670,44 +682,76 @@ export default function ResumePage({ src, lang = "fr" }) {
             min-height: 0;
             height: auto;
             max-height: none;
-            padding: 14px;
+            padding: 12px;
             overflow: visible;
           }
           .resume-detail-top {
-            grid-template-columns: 42px 1fr auto;
-            min-height: 64px;
+            grid-template-columns: 36px 1fr;
+            grid-template-areas:
+              "idx title"
+              "prog prog";
+            min-height: 72px;
             padding: 0 10px;
             gap: 8px;
+          }
+          .resume-detail-top-index {
+            grid-area: idx;
+            align-self: center;
+          }
+          .resume-detail-top-title {
+            grid-area: title;
+            align-self: center;
+            line-height: 0.95;
+          }
+          .resume-detail-top-progress {
+            grid-area: prog;
+            justify-self: end;
+            margin-top: -4px;
           }
           .resume-detail-top-index,
           .resume-detail-top-progress {
             font-size: 28px;
           }
           .resume-detail-top-title {
-            font-size: 22px;
+            font-size: 20px;
           }
           .resume-detail-list {
             gap: 6px;
             margin-top: 10px;
           }
           .resume-detail-row {
-            grid-template-columns: 34px 1fr auto;
-            min-height: 42px;
-            gap: 8px;
-            padding: 0 8px;
+            grid-template-columns: 30px 1fr;
+            grid-template-areas:
+              "index title"
+              "status status";
+            min-height: 0;
+            gap: 6px 8px;
+            padding: 8px;
+            align-items: start;
           }
           .resume-detail-row-index {
+            grid-area: index;
             font-size: 19px;
+            line-height: 1;
+            padding-top: 2px;
           }
           .resume-detail-row-title {
-            font-size: 16px;
+            grid-area: title;
+            font-size: 15px;
+            line-height: 1.16;
+            overflow-wrap: anywhere;
           }
           .resume-detail-status {
+            display: inline-flex;
+            align-items: center;
             font-size: 14px;
-            padding: 5px 8px;
+            padding: 5px 10px;
+            min-height: 28px;
           }
           .resume-detail-status-wrap {
+            grid-area: status;
             gap: 4px;
+            justify-self: end;
           }
           .resume-cert-link {
             width: 16px;
@@ -725,6 +769,46 @@ export default function ResumePage({ src, lang = "fr" }) {
           .resume-detail-bullet {
             font-size: 14px;
             line-height: 1.25;
+          }
+        }
+
+        @media (max-width: 430px) {
+          .resume-stack,
+          .resume-detail-panel {
+            width: 94vw;
+          }
+
+          .resume-card-inner {
+            padding-right: 8px;
+            padding-left: 40px;
+          }
+
+          .resume-title {
+            font-size: 24px;
+          }
+
+          .resume-rank-label {
+            font-size: 14px;
+          }
+
+          .resume-rank-number {
+            font-size: 32px;
+          }
+
+          .resume-subtitle {
+            font-size: 15px;
+          }
+
+          .resume-detail-top-title {
+            font-size: 18px;
+          }
+
+          .resume-detail-row-title {
+            font-size: 14px;
+          }
+
+          .resume-detail-status {
+            font-size: 13px;
           }
         }
 
