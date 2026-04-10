@@ -390,6 +390,7 @@ export default function Socials({ lang = "fr" }) {
           position: fixed;
           right: 0;
           left: 65%;
+          top: calc(155px + (var(--info-index) * 52px));
           height: 46px;
           display: block;
           text-align: left;
@@ -547,8 +548,10 @@ export default function Socials({ lang = "fr" }) {
             transform-origin: top right;
           }
           .sc-info-bar-wrap {
+            top: auto !important;
             left: 10%;
             right: 2%;
+            bottom: calc(118px + (var(--info-index) * 42px));
             height: 38px;
           }
           .sc-info-bar-text {
@@ -614,7 +617,7 @@ export default function Socials({ lang = "fr" }) {
           type="button"
           className={`sc-info-bar-wrap${activeInfoBar === i ? " selected" : ""}`}
           key={`bar-${active}-${i}`}
-          style={{ top: `${155 + i * 52}px`, animationDelay: `${i * 50}ms` }}
+          style={{ "--info-index": i, animationDelay: `${i * 50}ms` }}
           onClick={() => setActiveInfoBar(i)}
           onMouseEnter={() => setActiveInfoBar(i)}
           onFocus={() => setActiveInfoBar(i)}

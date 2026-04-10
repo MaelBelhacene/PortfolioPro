@@ -602,9 +602,20 @@ export default function ResumePage({ src, lang = "fr" }) {
         }
 
         @media (max-width: 768px) {
+          .resume-overlay {
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 4vh 0 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            pointer-events: all;
+          }
           .resume-stack {
-            top: 4vh;
-            left: 4vw;
+            position: relative;
+            top: auto;
+            left: auto;
             width: 92vw;
             transform: none;
             gap: 8px;
@@ -651,14 +662,16 @@ export default function ResumePage({ src, lang = "fr" }) {
             font-size: 18px;
           }
           .resume-detail-panel {
-            top: 50vh;
-            left: 4vw;
+            position: relative;
+            top: auto;
+            left: auto;
             right: auto;
             width: 92vw;
             min-height: 0;
-            height: 46vh;
+            height: auto;
+            max-height: none;
             padding: 14px;
-            overflow: auto;
+            overflow: visible;
           }
           .resume-detail-top {
             grid-template-columns: 42px 1fr auto;

@@ -6,7 +6,13 @@
 
 body {
   background: #000;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+img,
+video {
+  max-width: 100%;
 }
 
 #menu-screen {
@@ -110,6 +116,22 @@ body {
 }
 
 @media (max-width: 768px) {
+  body {
+    overflow-y: auto;
+  }
+
+  #menu-screen {
+    height: auto;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  #main {
+    height: auto;
+    min-height: 100dvh;
+  }
+
   .lang-switch {
     top: 10px;
     right: 10px;

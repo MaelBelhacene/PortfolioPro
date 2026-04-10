@@ -760,29 +760,54 @@ export default function AboutMe({ lang = "fr" }) {
             letter-spacing: 2px;
           }
           .sc-main-portrait-shell {
-            width: 56vw;
-            right: -16vw;
-            opacity: 0.78;
+            display: none;
           }
           .sc-reveal-panel {
-            top: 54vh;
-            left: -24vw;
-            width: 122vw;
-            height: 44vh;
-            transform: translateX(0) rotate(-12deg);
+            top: auto;
+            bottom: 12px;
+            left: 4vw;
+            width: 92vw;
+            height: auto;
+            min-height: 34vh;
+            max-height: 46vh;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 10px;
+            transform: none;
+            clip-path: polygon(0 0, 100% 0, calc(100% - 28px) 100%, 0 100%);
+            overflow: auto;
+          }
+          .sc-reveal-panel.mounted {
+            transform: none;
+          }
+          .sc-reveal-upper-bar,
+          .sc-reveal-lower-bar {
+            position: relative;
+            top: auto;
+            left: auto;
+            right: auto;
+            width: 100%;
+            height: auto;
+            clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+          }
+          .sc-reveal-upper-bar {
+            min-height: 62%;
+            padding: 10px;
+            gap: 8px;
           }
           .sc-reveal-upper-line {
             font-size: 13px;
             line-height: 1.2;
           }
           .sc-reveal-lower-bar {
-            width: 72%;
+            min-height: 48px;
             font-size: 13px;
             padding-left: 10px;
           }
           .sc-right-nav {
-            top: 8vh;
-            left: 4vw;
+            display: none;
           }
           .sc-right-nav .sc-nav-btn {
             font-size: 42px;

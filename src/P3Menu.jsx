@@ -363,11 +363,16 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
         }
 
         @media (max-width: 768px) {
+          .p3-overlay {
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 84px;
+          }
           .p3-menu {
             width: 92vw;
             align-items: flex-start;
             padding: 18px 16px;
-            margin-top: 36px;
+            margin-top: 0;
           }
           .p3-menu::before {
             inset: -10px -10px;
@@ -411,6 +416,22 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
           .p3-hint-key {
             font-size: 10px;
             padding: 0 5px;
+          }
+        }
+
+        @media (max-width: 560px) {
+          .p3-name-tag,
+          .p3-hint {
+            display: none;
+          }
+
+          .p3-overlay {
+            padding-top: 32px;
+          }
+
+          .p3-menu {
+            width: 94vw;
+            padding: 14px 12px;
           }
         }
       `}</style>
