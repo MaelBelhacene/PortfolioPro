@@ -20,10 +20,10 @@ const ABOUT_COPY = {
       {
         upper: [
           "Mael Belhacene",
-          "IT Security Assistant & Développeur Web",
-          "Énergie terrain : rapide, fiable, orienté impact.",
+          "Globe-trotter passionné, toujours en mouvement.",
+          "J’aime le sport en général, les mangas et la découverte de nouvelles cultures.",
         ],
-        lower: "Voir mes projets • Me contacter",
+        lower: "Mes passions • Mon univers",
       },
       {
         upper: [
@@ -47,7 +47,7 @@ const ABOUT_COPY = {
       show: "AFFICHER",
       back: "RETOUR",
     },
-    labels: ["FICHE IDENTITÉ", "MENTALITÉ", "OBJECTIF"],
+    labels: ["PASSIONS", "MENTALITÉ", "OBJECTIF"],
     roles: ["ONI", "FLUX", "OBJECTIF"],
   },
   en: {
@@ -55,10 +55,10 @@ const ABOUT_COPY = {
       {
         upper: [
           "Mael Belhacene",
-          "IT Security Assistant & Web Developer",
-          "Hands-on mindset: fast execution, reliability, and impact.",
+          "Passionate globetrotter, always on the move.",
+          "I enjoy sports in general, manga, and discovering new cultures.",
         ],
-        lower: "Explore my projects • Get in touch",
+        lower: "My passions • My world",
       },
       {
         upper: [
@@ -82,7 +82,7 @@ const ABOUT_COPY = {
       show: "DISPLAY",
       back: "BACK",
     },
-    labels: ["PROFILE CARD", "MINDSET", "GOAL"],
+    labels: ["PASSIONS", "MINDSET", "GOAL"],
     roles: ["ONI", "FLOW", "GOAL"],
   },
 };
@@ -95,7 +95,7 @@ const BASE_ROLES = [
 
 const ITEMS = [
   {
-    id: "twitch", label: "FICHE IDENTITÉ", handle: "@mael", href: "https://twitch.tv/yourname", icon: "🎮", barIcon: icon1, bars: 1, newBars: [0], counts: ["56"],
+    id: "twitch", label: "PASSIONS", handle: "@mael", href: "https://twitch.tv/yourname", icon: "🎮", barIcon: icon1, bars: 1, newBars: [0], counts: ["56"],
     links: ["twitch.tv/videos/2041837265"],
     stats: [
       { tag: "FOL", value: "1.2K", color: "#9147ff" },
