@@ -136,20 +136,13 @@ function MusicToggle() {
     setEnabled(true)
   }
 
-  function handleMusicKeyDown(event) {
-    if (event.key === 'Enter') {
-      event.preventDefault()
-      event.stopPropagation()
-    }
-  }
-
   return (
     <>
       <button
         type="button"
         className="music-switch"
         onClick={handleMusicToggle}
-        onKeyDown={handleMusicKeyDown}
+        onMouseUp={(event) => event.currentTarget.blur()}
         aria-pressed={enabled}
         aria-label={
           currentLang === 'fr'
