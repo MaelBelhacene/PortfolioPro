@@ -97,6 +97,20 @@ function MusicToggle() {
     }
   }, [enabled])
 
+  useEffect(() => {
+    if (!enabled) return
+
+    const audio = audioRef.current ?? getSharedMusicAudio()
+    if (!audio || !audio.paused) return
+
+    const playPromise = audio.play()
+    if (playPromise?.catch) {
+      playPromise.catch(() => {
+        // Keep UI state as-is; this is a best-effort resume after route navigation.
+      })
+    }
+  }, [enabled, location.pathname])
+
   function handleMusicToggle() {
     const audio = audioRef.current ?? getSharedMusicAudio()
     if (!audio) {
@@ -122,12 +136,20 @@ function MusicToggle() {
     setEnabled(true)
   }
 
+  function handleMusicKeyDown(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+  }
+
   return (
     <>
       <button
         type="button"
         className="music-switch"
         onClick={handleMusicToggle}
+        onKeyDown={handleMusicKeyDown}
         aria-pressed={enabled}
         aria-label={
           currentLang === 'fr'
