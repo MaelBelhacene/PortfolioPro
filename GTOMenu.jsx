@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 
 const ITEMS = [
   { id: "about",  label: "A",    href: "#about",  fontSize: 130, offsetX: 0,  offsetY: 0  },
@@ -12,7 +12,7 @@ const CLIP_SHAPES = [
   (w, h) => `polygon(0px ${h*0.1}px, ${w - h*0.4}px 0px, ${w}px ${h*0.45}px, ${w - h*0.25}px ${h}px, ${h*0.05}px ${h*0.9}px)`,
 ];
 
-export default function P3Menu() {
+export default function GTOMenu() {
   const [active, setActive] = useState(0);
   const [mounted, setMounted] = useState(false);
 
@@ -36,7 +36,7 @@ export default function P3Menu() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
-        .p3-root {
+        .GTO-root {
           position: relative;
           width: 100%;
           min-height: 100svh;
@@ -45,7 +45,7 @@ export default function P3Menu() {
           display: flex;
           align-items: center;
         }
-        .p3-video {
+        .GTO-video {
           position: absolute;
           inset: 0;
           width: 100%; height: 100%;
@@ -54,7 +54,7 @@ export default function P3Menu() {
           z-index: 0;
           pointer-events: none;
         }
-        .p3-circle {
+        .GTO-circle {
           position: absolute;
           right: -15vw; top: 50%;
           transform: translateY(-50%);
@@ -65,7 +65,7 @@ export default function P3Menu() {
           z-index: 1;
           pointer-events: none;
         }
-        .p3-bg-word {
+        .GTO-bg-word {
           position: absolute;
           bottom: -2vw; left: -1vw;
           font-family: 'Bebas Neue', sans-serif;
@@ -77,7 +77,7 @@ export default function P3Menu() {
           white-space: nowrap;
           user-select: none;
         }
-        .p3-scanlines {
+        .GTO-scanlines {
           position: absolute; inset: 0;
           background-image: repeating-linear-gradient(
             0deg, transparent, transparent 3px,
@@ -86,16 +86,16 @@ export default function P3Menu() {
           z-index: 3;
           pointer-events: none;
         }
-        .p3-mask {
+        .GTO-mask {
           position: absolute; inset: 0;
           background: linear-gradient(to right, rgba(4,6,15,0.85) 0%, rgba(4,6,15,0.4) 50%, transparent 100%);
           z-index: 4;
           pointer-events: none;
         }
-        .p3-stripe  { position:absolute; right:0; top:0; bottom:0; width:5px; background:#c4001a; z-index:10; }
-        .p3-stripe2 { position:absolute; right:9px; top:0; bottom:0; width:2px; background:rgba(196,0,26,0.22); z-index:10; }
+        .GTO-stripe  { position:absolute; right:0; top:0; bottom:0; width:5px; background:#c4001a; z-index:10; }
+        .GTO-stripe2 { position:absolute; right:9px; top:0; bottom:0; width:2px; background:rgba(196,0,26,0.22); z-index:10; }
 
-        .p3-menu {
+        .GTO-menu {
           position: relative;
           z-index: 20;
           padding: 48px 0 48px 48px;
@@ -103,7 +103,7 @@ export default function P3Menu() {
           flex-direction: column;
         }
 
-        .p3-row {
+        .GTO-row {
           position: relative;
           cursor: pointer;
           display: flex;
@@ -114,12 +114,12 @@ export default function P3Menu() {
           transform: translateX(-36px);
           transition: opacity 0.38s ease, transform 0.38s cubic-bezier(0.22,1,0.36,1);
         }
-        .p3-row.mounted {
+        .GTO-row.mounted {
           opacity: 1 !important;
           transform: translateX(0) !important;
         }
 
-        .p3-highlight {
+        .GTO-highlight {
           position: absolute;
           left: -48px; top: 50%;
           transform: translateY(-50%) scaleX(0);
@@ -129,11 +129,11 @@ export default function P3Menu() {
           transition: transform 0.22s cubic-bezier(0.22,1,0.36,1);
           pointer-events: none;
         }
-        .p3-row.active .p3-highlight {
+        .GTO-row.active .GTO-highlight {
           transform: translateY(-50%) scaleX(1);
         }
 
-        .p3-label {
+        .GTO-label {
           font-family: 'Bebas Neue', sans-serif;
           display: block;
           color: #2a5ca8;
@@ -143,10 +143,10 @@ export default function P3Menu() {
           z-index: 1;
           transition: color 0.12s ease, opacity 0.12s ease;
         }
-        .p3-row.active .p3-label { color: #ffffff; }
-        .p3-row:hover:not(.active) .p3-label { color: #4a82c8; }
+        .GTO-row.active .GTO-label { color: #ffffff; }
+        .GTO-row:hover:not(.active) .GTO-label { color: #4a82c8; }
 
-        .p3-hint {
+        .GTO-hint {
           position: absolute;
           bottom: 24px; right: 28px;
           z-index: 20;
@@ -156,29 +156,29 @@ export default function P3Menu() {
           opacity: 0;
           transition: opacity 0.5s ease 0.9s;
         }
-        .p3-hint.mounted { opacity: 1; }
-        .p3-hint-row {
+        .GTO-hint.mounted { opacity: 1; }
+        .GTO-hint-row {
           display: flex; align-items: center; gap: 8px;
           font-size: 13px; letter-spacing: 2px;
           color: rgba(255,255,255,0.28);
         }
-        .p3-hint-key {
+        .GTO-hint-key {
           border: 1px solid rgba(255,255,255,0.2);
           border-radius: 3px;
           padding: 1px 6px; font-size: 11px;
         }
       `}</style>
 
-      <div className="p3-root">
-        <video className="p3-video" src="/bg.mp4" autoPlay loop muted playsInline />
-        <div className="p3-circle" />
-        <div className="p3-bg-word">SYSTEM</div>
-        <div className="p3-scanlines" />
-        <div className="p3-mask" />
-        <div className="p3-stripe" />
-        <div className="p3-stripe2" />
+      <div className="GTO-root">
+        <video className="GTO-video" src="/bg.mp4" autoPlay loop muted playsInline />
+        <div className="GTO-circle" />
+        <div className="GTO-bg-word">SYSTEM</div>
+        <div className="GTO-scanlines" />
+        <div className="GTO-mask" />
+        <div className="GTO-stripe" />
+        <div className="GTO-stripe2" />
 
-        <nav className="p3-menu">
+        <nav className="GTO-menu">
           {ITEMS.map((item, i) => {
             const isActive = active === i;
             const dist = Math.abs(i - active);
@@ -191,7 +191,7 @@ export default function P3Menu() {
               <a
                 key={item.id}
                 href={item.href}
-                className={`p3-row ${isActive ? "active" : ""} ${mounted ? "mounted" : ""}`}
+                className={`GTO-row ${isActive ? "active" : ""} ${mounted ? "mounted" : ""}`}
                 style={{
                   marginLeft: item.offsetX,
                   marginTop: item.offsetY,
@@ -201,7 +201,7 @@ export default function P3Menu() {
                 aria-current={isActive ? "page" : undefined}
               >
                 <div
-                  className="p3-highlight"
+                  className="GTO-highlight"
                   style={{
                     width: estW,
                     height: estH,
@@ -209,7 +209,7 @@ export default function P3Menu() {
                   }}
                 />
                 <span
-                  className="p3-label"
+                  className="GTO-label"
                   style={{ fontSize: item.fontSize, opacity }}
                 >
                   {item.label}
@@ -219,11 +219,12 @@ export default function P3Menu() {
           })}
         </nav>
 
-        <div className={`p3-hint ${mounted ? "mounted" : ""}`}>
-          <div className="p3-hint-row"><span className="p3-hint-key">↑↓</span><span>NAVIGATE</span></div>
-          <div className="p3-hint-row"><span className="p3-hint-key">↵</span><span>CONFIRM</span></div>
+        <div className={`GTO-hint ${mounted ? "mounted" : ""}`}>
+          <div className="GTO-hint-row"><span className="GTO-hint-key">UP/DOWN</span><span>NAVIGATE</span></div>
+          <div className="GTO-hint-row"><span className="GTO-hint-key">ENTER</span><span>CONFIRM</span></div>
         </div>
       </div>
     </>
   );
 }
+

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 
 const MENU_ITEMS = [
   {
@@ -34,7 +34,7 @@ const MENU_ITEMS = [
   },
   {
     id: "socials",
-    labels: { fr: "RÉSEAUX", en: "SOCIALS" },
+    labels: { fr: "RESEAUX", en: "SOCIALS" },
     page: "socials",
     fontSize: 84,
     offsetX: 16,
@@ -68,7 +68,7 @@ const CLIP_SHAPES = [
   (w, h) => `polygon(0px 0px, ${w}px ${h * 0.5}px, 0px ${h}px)`,
 ];
 
-export default function P3Menu({ onNavigate, lang = "fr" }) {
+export default function GTOMenu({ onNavigate, lang = "fr" }) {
   const locale = lang === "en" ? "en" : "fr";
   const ui = MENU_UI[locale];
   const items = MENU_ITEMS.map((item) => ({ ...item, label: item.labels[locale] }));
@@ -103,7 +103,7 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
   return (
     <>
       <style>{`
-        .p3-overlay {
+        .GTO-overlay {
           position: absolute;
           inset: 0;
           z-index: 10;
@@ -113,10 +113,10 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
           pointer-events: none;
         }
 
-        .p3-stripe  { position:absolute; right:0; top:0; bottom:0; width:5px; background:#c4001a; z-index:10; pointer-events:none; }
-        .p3-stripe2 { position:absolute; right:9px; top:0; bottom:0; width:2px; background:rgba(245,122,139,0.22); z-index:10; pointer-events:none; }
+        .GTO-stripe  { position:absolute; right:0; top:0; bottom:0; width:5px; background:#c4001a; z-index:10; pointer-events:none; }
+        .GTO-stripe2 { position:absolute; right:9px; top:0; bottom:0; width:2px; background:rgba(245,122,139,0.22); z-index:10; pointer-events:none; }
 
-        .p3-menu {
+        .GTO-menu {
           position: relative;
           z-index: 20;
           padding: 48px;
@@ -125,7 +125,7 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
           align-items: center;
           pointer-events: all;
         }
-        .p3-menu::before {
+        .GTO-menu::before {
           content: "";
           position: absolute;
           inset: -18px -24px;
@@ -135,7 +135,7 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
           filter: drop-shadow(8px 8px 0 rgba(211, 40, 40, 0.45));
         }
 
-        .p3-row {
+        .GTO-row {
           position: relative;
           cursor: pointer;
           display: flex;
@@ -151,20 +151,20 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
           transform: translateX(var(--enter-x, 36px));
           transition: opacity 0.38s ease, transform 0.38s cubic-bezier(0.22,1,0.36,1), filter 0.25s ease;
         }
-        .p3-row.mounted {
+        .GTO-row.mounted {
           opacity: 1 !important;
           transform: translateX(0) !important;
         }
-        .p3-row:hover {
+        .GTO-row:hover {
           transform: translateX(var(--hover-x, -4px)) rotate(var(--hover-rot, -0.25deg));
           filter: saturate(1.08);
         }
-        .p3-row:focus-visible {
+        .GTO-row:focus-visible {
           outline: 2px solid #ffd230;
           outline-offset: 6px;
         }
 
-        .p3-glow {
+        .GTO-glow {
           position: absolute;
           top: 50%; left: 50%;
           transform: translate(-50%, -50%);
@@ -176,23 +176,23 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
           opacity: 0;
           transition: opacity 0.3s ease;
         }
-        .p3-row.active .p3-glow { opacity: 1; }
+        .GTO-row.active .GTO-glow { opacity: 1; }
 
-        .p3-skew-wrap {
+        .GTO-skew-wrap {
           position: relative;
           display: flex;
           align-items: center;
           isolation: isolate;
         }
 
-        @keyframes p3-shadow-pop {
+        @keyframes GTO-shadow-pop {
           0%   { transform: translateY(-40%) translateX(-12px) scaleX(0) scaleY(1); }
           55%  { transform: translateY(-46%) translateX(-15px) scaleX(1.22) scaleY(1.18); }
           75%  { transform: translateY(-39%) translateX(-11px) scaleX(0.96) scaleY(0.97); }
           100% { transform: translateY(-40%) translateX(-12px) scaleX(1) scaleY(1); }
         }
 
-        .p3-shadow-tri {
+        .GTO-shadow-tri {
           position: absolute;
           top: 50%;
           transform-origin: left center;
@@ -202,11 +202,11 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
           transform: translateY(-40%) translateX(-12px) scaleX(0);
           transition: transform 0.18s ease;
         }
-        .p3-shadow-tri.pop {
-          animation: p3-shadow-pop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        .GTO-shadow-tri.pop {
+          animation: GTO-shadow-pop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
 
-        .p3-highlight {
+        .GTO-highlight {
           position: absolute;
           top: 50%;
           transform-origin: left center;
@@ -216,12 +216,12 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
           pointer-events: none;
         }
 
-        .p3-label-wrap {
+        .GTO-label-wrap {
           position: relative;
           z-index: 3;
         }
 
-        .p3-label-base {
+        .GTO-label-base {
           font-family: var(--gto-font-display);
           font-style: italic;
           letter-spacing: 2px;
@@ -232,14 +232,14 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
           text-shadow: 0 2px 0 rgba(0, 0, 0, 0.45);
         }
 
-        .p3-label-dark {
+        .GTO-label-dark {
           color: #ffe082;
           transition: color 0.12s ease;
         }
-        .p3-row.active .p3-label-dark { color: #191919; }
-        .p3-row:hover:not(.active) .p3-label-dark { color: #ffd230; }
+        .GTO-row.active .GTO-label-dark { color: #191919; }
+        .GTO-row:hover:not(.active) .GTO-label-dark { color: #ffd230; }
 
-        .p3-label-bright {
+        .GTO-label-bright {
           color: #d32828;
           position: absolute;
           inset: 0;
@@ -248,9 +248,9 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
           transition: opacity 0.12s ease;
           -webkit-text-stroke: 1px rgba(0, 0, 0, 0.45);
         }
-        .p3-row.active .p3-label-bright { opacity: 1; }
+        .GTO-row.active .GTO-label-bright { opacity: 1; }
 
-        .p3-hint {
+        .GTO-hint {
           position: absolute;
           bottom: 24px; right: 28px;
           z-index: 20;
@@ -260,19 +260,19 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
           opacity: 0;
           transition: opacity 0.5s ease 0.9s;
         }
-        .p3-hint.mounted { opacity: 1; }
-        .p3-hint-row {
+        .GTO-hint.mounted { opacity: 1; }
+        .GTO-hint-row {
           display: flex; align-items: center; gap: 8px;
           font-size: 13px; letter-spacing: 2px;
           color: rgba(255, 244, 204, 0.6);
         }
-        .p3-hint-key {
+        .GTO-hint-key {
           border: 1px solid rgba(255, 210, 48, 0.45);
           border-radius: 3px;
           padding: 1px 6px; font-size: 11px;
         }
 
-        .p3-name-tag {
+        .GTO-name-tag {
           position: absolute;
           top: 18px;
           left: 22px;
@@ -291,7 +291,7 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
           flex-direction: column;
           align-items: flex-start;
         }
-        .p3-name-tag span:first-child {
+        .GTO-name-tag span:first-child {
           color: rgba(255, 244, 204, 0.9);
         }
 
@@ -310,15 +310,15 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
           pointer-events: none;
         }
 
-        .gto-overlay .p3-menu,
-        .gto-overlay .p3-name-tag,
-        .gto-overlay .p3-hint,
-        .gto-overlay .p3-stripe,
-        .gto-overlay .p3-stripe2 {
+        .gto-overlay .GTO-menu,
+        .gto-overlay .GTO-name-tag,
+        .gto-overlay .GTO-hint,
+        .gto-overlay .GTO-stripe,
+        .gto-overlay .GTO-stripe2 {
           z-index: 2;
         }
 
-        .gto-overlay .p3-stripe {
+        .gto-overlay .GTO-stripe {
           right: 18px;
           top: 5%;
           bottom: 5%;
@@ -331,7 +331,7 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
             0 0 18px rgba(255, 210, 48, 0.24);
         }
 
-        .gto-overlay .p3-stripe2 {
+        .gto-overlay .GTO-stripe2 {
           right: 29px;
           top: 9%;
           bottom: 9%;
@@ -342,47 +342,47 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
           box-shadow: 0 0 9px rgba(211, 40, 40, 0.32);
         }
 
-        .gto-overlay .p3-highlight {
+        .gto-overlay .GTO-highlight {
           background: #ffd230;
           box-shadow: 8px 0 0 #d32828;
         }
 
         @media (max-width: 1024px) {
-          .p3-menu {
+          .GTO-menu {
             padding: 28px;
           }
-          .p3-name-tag {
+          .GTO-name-tag {
             font-size: 72px;
             top: 14px;
             left: 14px;
           }
-          .p3-hint {
+          .GTO-hint {
             bottom: 16px;
             right: 16px;
           }
         }
 
         @media (max-width: 768px) {
-          .p3-overlay {
+          .GTO-overlay {
             align-items: flex-start;
             justify-content: center;
             padding-top: 84px;
           }
-          .p3-menu {
+          .GTO-menu {
             width: 92vw;
             align-items: flex-start;
             padding: 18px 16px;
             margin-top: 0;
           }
-          .p3-menu::before {
+          .GTO-menu::before {
             inset: -10px -10px;
           }
-          .p3-name-tag {
+          .GTO-name-tag {
             font-size: 44px;
             transform: rotate(12deg);
             opacity: 0.86;
           }
-          .gto-overlay .p3-stripe {
+          .gto-overlay .GTO-stripe {
             right: 9px;
             width: 5px;
             top: 7%;
@@ -391,60 +391,60 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
               -6px 0 0 rgba(16, 16, 16, 0.66),
               0 0 11px rgba(255, 210, 48, 0.2);
           }
-          .gto-overlay .p3-stripe2 {
+          .gto-overlay .GTO-stripe2 {
             right: 17px;
             top: 11%;
             bottom: 11%;
             width: 2px;
           }
-          .p3-row {
+          .GTO-row {
             margin-left: 0 !important;
             margin-right: 0 !important;
             margin-top: 2px !important;
           }
-          .p3-label-base {
+          .GTO-label-base {
             letter-spacing: 1px;
           }
-          .p3-hint {
+          .GTO-hint {
             right: 10px;
             bottom: 10px;
             gap: 3px;
           }
-          .p3-hint-row {
+          .GTO-hint-row {
             font-size: 11px;
           }
-          .p3-hint-key {
+          .GTO-hint-key {
             font-size: 10px;
             padding: 0 5px;
           }
         }
 
         @media (max-width: 560px) {
-          .p3-name-tag,
-          .p3-hint {
+          .GTO-name-tag,
+          .GTO-hint {
             display: none;
           }
 
-          .p3-overlay {
+          .GTO-overlay {
             padding-top: 32px;
           }
 
-          .p3-menu {
+          .GTO-menu {
             width: 94vw;
             padding: 14px 12px;
           }
         }
       `}</style>
 
-      <div className="p3-overlay gto-overlay">
-        <div className="p3-name-tag">
+      <div className="GTO-overlay gto-overlay">
+        <div className="GTO-name-tag">
           <span>MAEL</span>
           <span>BELHACENE</span>
         </div>
-        <div className="p3-stripe" />
-        <div className="p3-stripe2" />
+        <div className="GTO-stripe" />
+        <div className="GTO-stripe2" />
 
-        <nav className="p3-menu" aria-label={ui.nav}>
+        <nav className="GTO-menu" aria-label={ui.nav}>
           {items.map((item, i) => {
             const isActive = active === i;
             const dist = Math.abs(i - active);
@@ -460,7 +460,7 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
               <button
                 key={item.id}
                 type="button"
-                className={`p3-row ${isActive ? "active" : ""} ${mounted ? "mounted" : ""}`}
+                className={`GTO-row ${isActive ? "active" : ""} ${mounted ? "mounted" : ""}`}
                 style={{
                   "--enter-x": `${dir * 36}px`,
                   "--hover-x": `${dir * -4}px`,
@@ -479,14 +479,14 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
                 aria-pressed={isActive}
                 aria-label={item.href ? `${ui.open} ${item.label} ${ui.newTab}` : `${ui.goTo} ${item.label}`}
               >
-                <div className="p3-glow" />
+                <div className="GTO-glow" />
                 <div
-                  className="p3-skew-wrap"
+                  className="GTO-skew-wrap"
                   style={{ transform: `skewX(${dir * skewX}deg) skewY(${dir * skewY}deg)` }}
                 >
                   <div
                     key={isActive ? `pop-${i}-${animKey}` : `idle-${i}`}
-                    className={`p3-shadow-tri${isActive ? ' pop' : ''}`}
+                    className={`GTO-shadow-tri${isActive ? ' pop' : ''}`}
                     style={{
                       width: estW,
                       height: estH,
@@ -494,7 +494,7 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
                     }}
                   />
                   <div
-                    className="p3-highlight"
+                    className="GTO-highlight"
                     style={{
                       width: estW,
                       height: estH,
@@ -502,12 +502,12 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
                       transform: `translateY(-50%) scaleX(${isActive ? 1 : 0})`,
                     }}
                   />
-                  <div className="p3-label-wrap" style={{ opacity }}>
-                    <span className="p3-label-base p3-label-dark" style={{ fontSize: item.fontSize }}>
+                  <div className="GTO-label-wrap" style={{ opacity }}>
+                    <span className="GTO-label-base GTO-label-dark" style={{ fontSize: item.fontSize }}>
                       {item.label}
                     </span>
                     <span
-                      className="p3-label-base p3-label-bright"
+                      className="GTO-label-base GTO-label-bright"
                       style={{
                         fontSize: item.fontSize,
                         clipPath: clipFn(estW, estH),
@@ -522,11 +522,12 @@ export default function P3Menu({ onNavigate, lang = "fr" }) {
           })}
         </nav>
 
-        <div className={`p3-hint ${mounted ? "mounted" : ""}`}>
-          <div className="p3-hint-row"><span className="p3-hint-key">↑↓</span><span>{ui.move}</span></div>
-          <div className="p3-hint-row"><span className="p3-hint-key">↵</span><span>{ui.confirm}</span></div>
+        <div className={`GTO-hint ${mounted ? "mounted" : ""}`}>
+          <div className="GTO-hint-row"><span className="GTO-hint-key">UP/DOWN</span><span>{ui.move}</span></div>
+          <div className="GTO-hint-row"><span className="GTO-hint-key">ENTER</span><span>{ui.confirm}</span></div>
         </div>
       </div>
     </>
   );
 }
+

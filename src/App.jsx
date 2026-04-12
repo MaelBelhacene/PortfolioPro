@@ -4,7 +4,7 @@ import { AnimatePresence } from 'framer-motion'
 import menuVideo from './assets/gto.mp4'
 import resumeVideo from './assets/video.mp4'
 import musicFile from './assets/music.mp3'
-import P3Menu from './P3Menu'
+import GTOMenu from './GTOMenu'
 import PageTransition from './PageTransition'
 import './App.css'
 
@@ -174,7 +174,7 @@ function MenuScreen({ lang }) {
     <div id="menu-screen" className="gto-screen">
       <video className="gto-main-video" src={menuVideo} autoPlay loop muted playsInline />
       <div className="gto-screen-overlay" aria-hidden="true" />
-      <P3Menu lang={lang} onNavigate={(page) => navigate(`/${lang}/${page}`)} />
+      <GTOMenu lang={lang} onNavigate={(page) => navigate(`/${lang}/${page}`)} />
     </div>
   )
 }
