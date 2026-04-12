@@ -6,7 +6,13 @@
 
 body {
   background: #000;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+img,
+video {
+  max-width: 100%;
 }
 
 #menu-screen {
@@ -69,4 +75,119 @@ body {
   background:
     linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.2) 42%, rgba(0, 0, 0, 0.6)),
     repeating-linear-gradient(-10deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 9px);
+}
+
+.lang-switch {
+  position: fixed;
+  top: 14px;
+  right: 16px;
+  z-index: 1200;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid rgba(255, 210, 48, 0.55);
+  border-radius: 999px;
+  background: rgba(8, 8, 8, 0.8);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+.lang-switch-chip {
+  min-width: 36px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  text-align: center;
+  font-family: var(--gto-font-ui);
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: rgba(255, 244, 204, 0.7);
+}
+
+.lang-switch-chip.active {
+  background: var(--gto-yellow);
+  color: #131313;
+}
+
+.lang-switch:focus-visible {
+  outline: 2px solid var(--gto-yellow);
+  outline-offset: 3px;
+}
+
+.music-switch {
+  position: fixed;
+  top: 62px;
+  right: 16px;
+  z-index: 1200;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 210, 48, 0.5);
+  border-radius: 999px;
+  background: rgba(8, 8, 8, 0.8);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  color: rgba(255, 244, 204, 0.85);
+  cursor: pointer;
+}
+
+.music-switch-icon {
+  font-family: var(--gto-font-ui);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.music-switch-chip {
+  min-width: 40px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  text-align: center;
+  font-family: var(--gto-font-ui);
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: rgba(255, 244, 204, 0.75);
+}
+
+.music-switch-chip.active {
+  background: var(--gto-yellow);
+  color: #131313;
+}
+
+.music-switch:focus-visible {
+  outline: 2px solid var(--gto-yellow);
+  outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+  body {
+    overflow-y: auto;
+  }
+
+  #menu-screen {
+    height: auto;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  #main {
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  .lang-switch {
+    top: 10px;
+    right: 10px;
+    transform: scale(0.92);
+    transform-origin: top right;
+  }
+
+  .music-switch {
+    top: 54px;
+    right: 10px;
+    transform: scale(0.92);
+    transform-origin: top right;
+  }
 }

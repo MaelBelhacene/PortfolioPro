@@ -1,13 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import char1 from "./assets/char1.png";
 import char2 from "./assets/char2.png";
 import char3 from "./assets/char3.png";
-import bgVideo from "./assets/gto.mp4";
+import bgVideo from "./assets/socials.mp4";
 import newsign from "./assets/newsign.png";
-import icon1 from "./assets/icon1.png";
-import icon2 from "./assets/icon2.png";
-import icon3 from "./assets/icon3.png";
+
+const SOCIALS_COPY = {
+  fr: {
+    labels: ["GITHUB", "LINKEDIN", "CONTACT"],
+    selectLink: "Selectionner lien",
+    itemOpen: "Ouvrir",
+    itemSelect: "Selectionner",
+    footer: { select: "SÉLECTIONNER", open: "OUVRIR", back: "RETOUR" },
+  },
+  en: {
+    labels: ["GITHUB", "LINKEDIN", "CONTACT"],
+    selectLink: "Select link",
+    itemOpen: "Open",
+    itemSelect: "Select",
+    footer: { select: "SELECT", open: "OPEN", back: "BACK" },
+  },
+};
 
 const CHARS = [char1, char2, char3];
 
@@ -19,32 +33,29 @@ const ROLES = [
 
 const ITEMS = [
   {
-    id: "twitch", label: "GITHUB", handle: "@mael", href: "https://github.com/MaelBelhacene", icon: "💻", barIcon: icon1, bars: 1, newBars: [0], counts: ["56"],
+    id: "twitch", label: "GITHUB", handle: "@mael", href: "https://github.com/MaelBelhacene", icon: "💻", bars: 1, newBars: [0],
     links: ["github.com/MaelBelhacene"],
-    stats: [
-      { tag: "FOL", value: "1.2K", color: "#9147ff" },
-      { tag: "VWR", value: "042",  color: "#ffd230" },
-    ],
   },
   {
-    id: "instagram", label: "LINKEDIN", handle: "@mael", href: "https://www.linkedin.com/in/mael-belhacene-89545b294/", icon: "💼", barIcon: icon2, bars: 1, newBars: [0], counts: ["PRO"],
+    id: "instagram", label: "LINKEDIN", handle: "@mael", href: "https://www.linkedin.com/in/mael-belhacene-89545b294/", icon: "💼", bars: 1, newBars: [0],
     links: ["www.linkedin.com/in/mael-belhacene-89545b294/"],
-    stats: [
-      { tag: "FOL", value: "3.4K", color: "#d32828" },
-      { tag: "PST", value: "128",  color: "#ffd230" },
-    ],
   },
   {
-    id: "tiktok", label: "CONTACT", handle: "@mael", href: "mailto:maelbelhacene38.pro@gmail.com", icon: "📨", barIcon: icon3, bars: 1, newBars: [0], counts: ["OPEN"],
+    id: "tiktok", label: "CONTACT", handle: "@mael", href: "mailto:maelbelhacene38.pro@gmail.com", icon: "📨", bars: 1, newBars: [0],
     links: ["mailto:maelbelhacene38.pro@gmail.com - Ouvert a toute collaboration commerciale"],
-    stats: [
-      { tag: "FOL", value: "8.9K", color: "#ffd230" },
-      { tag: "LKS", value: "52K",  color: "#d32828" },
-    ],
   },
 ];
 
-export default function Socials() {
+export default function Socials({ lang = "fr" }) {
+  const locale = lang === "en" ? "en" : "fr";
+  const copy = SOCIALS_COPY[locale];
+  const localizedItems = useMemo(
+    () => ITEMS.map((item, index) => ({
+      ...item,
+      label: copy.labels[index],
+    })),
+    [copy.labels],
+  );
   const [active, setActive]               = useState(0);
   const [mounted, setMounted]             = useState(false);
   const [activeInfoBar, setActiveInfoBar] = useState(0);
@@ -70,26 +81,32 @@ export default function Socials() {
     const onKey = (e) => {
       if (focus === "left") {
         if (e.key === "ArrowUp")    setActive(i => Math.max(0, i - 1));
-        if (e.key === "ArrowDown")  setActive(i => Math.min(ITEMS.length - 1, i + 1));
+        if (e.key === "ArrowDown")  setActive(i => Math.min(localizedItems.length - 1, i + 1));
         if (e.key === "ArrowRight") { setFocus("right"); setActiveInfoBar(0); }
-        if (e.key === "Enter")      window.open(resolveLink(ITEMS[active].href), "_blank");
+        if (e.key === "Enter")      window.open(resolveLink(localizedItems[active].href), "_blank", "noopener,noreferrer");
       } else {
-        const barCount = ITEMS[active].bars;
+        const barCount = localizedItems[active].bars;
         if (e.key === "ArrowUp")   setActiveInfoBar(i => Math.max(0, i - 1));
         if (e.key === "ArrowDown") setActiveInfoBar(i => Math.min(barCount - 1, i + 1));
         if (e.key === "ArrowLeft") setFocus("left");
-        if (e.key === "Enter")     window.open(resolveLink(ITEMS[active].links[activeInfoBar]), "_blank");
+        if (e.key === "Enter")     window.open(resolveLink(localizedItems[active].links[activeInfoBar]), "_blank", "noopener,noreferrer");
       }
       if ((e.key === "ArrowLeft" && focus === "left") || e.key === "Escape" || e.key === "Backspace") navigate(-1);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [active, activeInfoBar, navigate, focus]);
+  }, [active, activeInfoBar, navigate, focus, localizedItems]);
 
   return (
     <div id="menu-screen" className="gto-social-screen">
-      <video src={bgVideo} autoPlay loop muted playsInline />
+      <video src={bgVideo} autoPlay loop muted playsInline preload="auto" className="sc-bg-video" />
       <style>{`
+        .sc-bg-video {
+          object-position: center center;
+          filter: saturate(1.05) contrast(1.04) brightness(0.96);
+          transform: scale(1.01);
+          transform-origin: center;
+        }
         .sc-root {
           position: absolute;
           inset: 0;
@@ -109,7 +126,7 @@ export default function Socials() {
           pointer-events: none;
           background: repeating-linear-gradient(
             -10deg,
-            rgba(255, 210, 48, 0.04) 0 8px,
+            rgba(255, 210, 48, 0.02) 0 8px,
             rgba(0, 0, 0, 0) 8px 22px
           );
           mix-blend-mode: soft-light;
@@ -134,8 +151,18 @@ export default function Socials() {
         .sc-bar-outer {
           position: relative;
           flex-shrink: 0;
+          display: block;
+          text-align: left;
+          background: transparent;
+          border: 0;
+          padding: 0;
+          font: inherit;
           transform: translateX(-100%);
           transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .sc-bar-outer:focus-visible {
+          outline: 2px solid #ffd230;
+          outline-offset: 4px;
         }
         .sc-bar-outer:hover {
           transform: translateX(4px);
@@ -295,67 +322,6 @@ export default function Socials() {
         .sc-nav-arrow.left  { animation: sc-arrow-left  0.8s ease-in-out infinite; }
         .sc-nav-arrow.right { animation: sc-arrow-right 0.8s ease-in-out infinite; }
 
-        /* right: stats group */
-        .sc-stats {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          padding-right: 24px;
-          flex-shrink: 0;
-        }
-
-        .sc-stat {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-        }
-
-        .sc-stat-top {
-          display: flex;
-          align-items: baseline;
-          gap: 4px;
-        }
-
-        .sc-stat-tag {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 9px;
-          letter-spacing: 1.5px;
-          padding: 1px 4px;
-          border-width: 1px;
-          border-style: solid;
-          line-height: 1.4;
-          user-select: none;
-        }
-
-        .sc-stat-num {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 26px;
-          font-style: italic;
-          line-height: 1;
-          color: #fff4cc;
-          letter-spacing: 1px;
-          user-select: none;
-          transition: color 0.2s ease;
-        }
-        .sc-bar-outer.active .sc-stat-num { color: #111111; }
-
-        .sc-stat-bars {
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          gap: 1px;
-          margin-top: 2px;
-        }
-        .sc-stat-bar-color {
-          height: 3px;
-          width: 100%;
-        }
-        .sc-stat-bar-black {
-          height: 2px;
-          width: 100%;
-          background: #000;
-        }
-
         /* character portrait */
         .sc-char {
           position: absolute;
@@ -430,14 +396,23 @@ export default function Socials() {
           position: fixed;
           right: 0;
           left: 65%;
+          top: calc(155px + (var(--info-index) * 52px));
           height: 46px;
+          display: block;
+          text-align: left;
           background: transparent;
+          border: 0;
           pointer-events: all;
           cursor: pointer;
           z-index: 50;
           padding: 0;
+          font: inherit;
           animation: sc-infobar-in 0.35s cubic-bezier(0.22,1,0.36,1) both;
           transition: transform 0.18s ease;
+        }
+        .sc-info-bar-wrap:focus-visible {
+          outline: 2px solid #ffd230;
+          outline-offset: 4px;
         }
         .sc-info-bar-wrap:hover {
           transform: translateX(-4px);
@@ -486,42 +461,6 @@ export default function Socials() {
           padding: 0 14px;
           user-select: none;
         }
-        .sc-info-bar-box {
-          height: 70%;
-          background: #1a1a1a;
-          display: flex;
-          align-items: center;
-          padding: 0 12px;
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 20px;
-          letter-spacing: 1px;
-          color: #fff;
-          flex-shrink: 0;
-          border-radius: 6px;
-          margin-right: 4px;
-          user-select: none;
-        }
-
-        .sc-info-bar-icon {
-          height: 55%;
-          width: auto;
-          flex-shrink: 0;
-          margin-left: 14px;
-          object-fit: contain;
-          pointer-events: none;
-          user-select: none;
-        }
-
-        .sc-info-bar-count {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 22px;
-          letter-spacing: 1px;
-          color: #111;
-          margin-right: 80px;
-          flex-shrink: 0;
-          user-select: none;
-        }
-
         /* footer hints */
         .sc-footer {
           position: fixed;
@@ -553,7 +492,7 @@ export default function Socials() {
           z-index: 11;
           background: repeating-linear-gradient(
             -12deg,
-            rgba(255, 210, 48, 0.06) 0 10px,
+            rgba(255, 210, 48, 0.03) 0 10px,
             rgba(0, 0, 0, 0) 10px 26px
           );
           mix-blend-mode: soft-light;
@@ -594,8 +533,7 @@ export default function Socials() {
           .sc-bar-outer.active .sc-bar-red {
             height: 68px;
           }
-          .sc-char,
-          .sc-stats {
+          .sc-char {
             display: none;
           }
           .sc-role {
@@ -616,21 +554,16 @@ export default function Socials() {
             transform-origin: top right;
           }
           .sc-info-bar-wrap {
+            top: auto !important;
             left: 10%;
             right: 2%;
+            bottom: calc(118px + (var(--info-index) * 42px));
             height: 38px;
           }
           .sc-info-bar-text {
             font-size: 15px;
             letter-spacing: 1px;
             padding: 0 8px;
-          }
-          .sc-info-bar-box,
-          .sc-info-bar-count {
-            font-size: 14px;
-          }
-          .sc-info-bar-count {
-            margin-right: 14px;
           }
           .sc-footer {
             right: 8px;
@@ -642,15 +575,19 @@ export default function Socials() {
       `}</style>
 
       <div className="sc-root" role="navigation">
-        {ITEMS.map((item, i) => (
-          <div
+        {localizedItems.map((item, i) => (
+          <button
+            type="button"
             key={item.id}
             className={`sc-bar-outer${active === i ? " active" : ""}${mounted ? " mounted" : ""}`}
             onClick={() => {
-              if (active === i) window.open(item.href, "_blank");
+              if (active === i) window.open(item.href, "_blank", "noopener,noreferrer");
               else setActive(i);
             }}
             onMouseEnter={() => setActive(i)}
+            onFocus={() => setActive(i)}
+            aria-label={active === i ? `${copy.itemOpen} ${item.label}` : `${copy.itemSelect} ${item.label}`}
+            aria-pressed={active === i}
           >
             <div className="sc-bar-red" />
             <div className="sc-bar">
@@ -665,23 +602,9 @@ export default function Socials() {
                     <div className="sc-label">{item.label}</div>
                   </div>
                 </div>
-                <div className="sc-stats">
-                  {item.stats.map(s => (
-                    <div className="sc-stat" key={s.tag}>
-                      <div className="sc-stat-top">
-                        <span className="sc-stat-tag" style={{ color: s.color, borderColor: s.color }}>{s.tag}</span>
-                        <span className="sc-stat-num">{s.value}</span>
-                      </div>
-                      <div className="sc-stat-bars">
-                        <div className="sc-stat-bar-color" style={{ background: s.color }} />
-                        <div className="sc-stat-bar-black" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
-          </div>
+          </button>
         ))}
       </div>
 
@@ -689,36 +612,37 @@ export default function Socials() {
         <div className="sc-right-nav" key={active}>
           <span className="sc-nav-arrow left">◄</span>
           <span className="sc-nav-btn">LB</span>
-          <span className="sc-nav-label">{ITEMS[active].label}</span>
+          <span className="sc-nav-label">{localizedItems[active].label}</span>
           <span className="sc-nav-btn">RB</span>
           <span className="sc-nav-arrow right">►</span>
         </div>
       )}
 
-      {mounted && Array.from({ length: ITEMS[active].bars }).map((_, i) => (
-        <div
+      {mounted && Array.from({ length: localizedItems[active].bars }).map((_, i) => (
+        <button
+          type="button"
           className={`sc-info-bar-wrap${activeInfoBar === i ? " selected" : ""}`}
           key={`bar-${active}-${i}`}
-          style={{ top: `${155 + i * 52}px`, animationDelay: `${i * 50}ms` }}
+          style={{ "--info-index": i, animationDelay: `${i * 50}ms` }}
           onClick={() => setActiveInfoBar(i)}
           onMouseEnter={() => setActiveInfoBar(i)}
+          onFocus={() => setActiveInfoBar(i)}
+          aria-label={`${copy.selectLink} ${i + 1} ${locale === "fr" ? "de" : "for"} ${localizedItems[active].label}`}
+          aria-pressed={activeInfoBar === i}
         >
-          {ITEMS[active].newBars.includes(i) && (
+          {localizedItems[active].newBars.includes(i) && (
             <img className="sc-info-bar-new" src={newsign} alt="" />
           )}
           <div className="sc-info-bar">
-            <img className="sc-info-bar-icon" src={ITEMS[active].barIcon} alt="" />
-            <span className="sc-info-bar-text">{formatInfoText(ITEMS[active].links[i])}</span>
-            <span className="sc-info-bar-box">VUES</span>
-            <span className="sc-info-bar-count">{ITEMS[active].counts[i]}</span>
+            <span className="sc-info-bar-text">{formatInfoText(localizedItems[active].links[i])}</span>
           </div>
-        </div>
+        </button>
       ))}
 
       <div className={`sc-footer${mounted ? " mounted" : ""}`}>
-        <div className="sc-footer-row"><span className="sc-footer-key">↑↓</span><span>SÉLECTIONNER</span></div>
-        <div className="sc-footer-row"><span className="sc-footer-key">↵</span><span>OUVRIR</span></div>
-        <div className="sc-footer-row"><span className="sc-footer-key">ESC</span><span>RETOUR</span></div>
+        <div className="sc-footer-row"><span className="sc-footer-key">↑↓</span><span>{copy.footer.select}</span></div>
+        <div className="sc-footer-row"><span className="sc-footer-key">↵</span><span>{copy.footer.open}</span></div>
+        <div className="sc-footer-row"><span className="sc-footer-key">ESC</span><span>{copy.footer.back}</span></div>
       </div>
     </div>
   );

@@ -2,34 +2,38 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import gtoTransitionVideo from "./assets/gto-transition.mp4";
 
-const ITEMS = [
-  { id: "i", badge: "I", title: "FORMATION", subtitle: "Université / Cursus", rank: 3 },
-  { id: "ii", badge: "II", title: "COMPÉTENCES", subtitle: "Frontend / Design / UI", rank: 4 },
-  { id: "iii", badge: "III", title: "PROJETS", subtitle: "Travaux mis en avant", rank: 5 },
-  { id: "iv", badge: "IV", title: "EXPÉRIENCE", subtitle: "Stages / Rôles", rank: 2 },
-];
-
-const DETAIL_CONTENT = [
+const RESUME_COPY = {
+  fr: {
+    items: [
+      { id: "i", badge: "I", title: "FORMATION", subtitle: "Université / Cursus", rank: 3 },
+      { id: "iv", badge: "II", title: "EXPÉRIENCE", subtitle: "Stages / Rôles", rank: 2 },
+      { id: "iii", badge: "III", title: "PROJETS", subtitle: "Travaux mis en avant", rank: 5 },
+      { id: "ii", badge: "IV", title: "COMPÉTENCES", subtitle: "Frontend / Design / UI", rank: 4 },
+    ],
+    detailsTitle: "DÉTAILS",
+    rankLabel: "RANG",
+    certLabel: "Voir le certificat",
+    detailContent: [
   {
     index: "01",
     title: "FORMATION & CERTIFICATIONS",
     progress: "5/5",
     rows: [
-      { index: "01", title: "Bachelor Administrateur Systèmes & Réseaux — CESI (2025–2026)", status: "En cours" },
-      { index: "02", title: "Développement Informatique BAC+2 — CESI (2023–2025)", status: "120 ECTS" },
+      { index: "01", title: "Master Manager en Infrastructures et Cybersécurité des SI — CESI (2026–2028)", status: "À venir" },
+      { index: "02", title: "Bachelor Administrateur Systèmes & Réseaux — CESI (2025–2026)", status: "En cours" },
+      { index: "03", title: "Développement Informatique BAC+2 — CESI (2023–2025)", status: "120 ECTS" },
       {
-        index: "03",
+        index: "04",
         title: "Bac Pro Systèmes Numériques — Lycée Thomas Edison (2020–2023)",
         status: "AB",
         certUrl: "https://drive.google.com/file/d/1zSvIMhioCmwxgUhWl1z6LdgYOTI5zEo_/view?usp=sharing",
       },
       {
-        index: "04",
+        index: "05",
         title: "Cybercriminalité — United Nations (2025)",
         status: "Certifié",
         certUrl: "https://elearningunodc.org/pluginfile.php/1/tool_certificate/issues/1765813175/1774172153MB.pdf",
-      }, 
-      { index: "05", title: "SST — INRS (2025–2027)", status: "Valide" },
+      },
     ],
     bullets: [
       "- Compétences académiques : LAN/WAN, modèle OSI, Linux, VMware vSphere et gestion de projet.",
@@ -39,19 +43,18 @@ const DETAIL_CONTENT = [
   },
   {
     index: "02",
-    title: "SOCLE TECHNIQUE",
-    progress: "5/5",
+    title: "PARCOURS PROFESSIONNEL",
+    progress: "4/4",
     rows: [
-      { index: "01", title: "Cybersécurité : GRC (PSSI, RGPD, ANSSI), incidents, phishing", status: "Avancé" },
-      { index: "02", title: "Développement : PHP/Laravel, Node.js, API REST, MVC", status: "Avancé" },
-      { index: "03", title: "Systèmes & Réseaux : Linux, Apache/LAMP, VMware, LAN/WAN", status: "Confirmé" },
-      { index: "04", title: "Base de données : MySQL, modélisation, optimisation", status: "Confirmé" },
-      { index: "05", title: "Outils : Linux, VS Code, SentinelOne, Sekoia", status: "Quotidien" },
+      { index: "01", title: "IT Security Assistant — DOMPLUS Groupe (2026–auj.)", status: "Actuel" },
+      { index: "02", title: "IT Infrastructure & Security Administrator (2025–2026)", status: "Terminé" },
+      { index: "03", title: "Project & Application Manager (2023–2025)", status: "Terminé" },
+      { index: "04", title: "IT & Cloud Technician — PROWEBCE (2023)", status: "Stage" },
     ],
     bullets: [
-      "- Profil hybride développement + sécurité, orienté performance applicative et durcissement des environnements.",
-      "- Capacité à intervenir sur des enjeux techniques et stratégiques (conformité, gouvernance et architecture).",
-      "- Pratique de la collaboration transverse avec équipes infra, sécurité et métiers.",
+      "- Mise en œuvre de la stratégie sécurité : PSSI, RGPD, ANSSI/CNIL, comités sécurité et risques tiers.",
+      "- Déploiement EDR/XDR, campagnes de phishing, sensibilisation interne et coordination SOC Orange Cyberdefense.",
+      "- Développement d’applications web (Laravel, Node.js), plateforme de ticketing from scratch, intégration API EasyRedmine et participation ERP Sage X3.",
     ],
   },
   {
@@ -72,27 +75,121 @@ const DETAIL_CONTENT = [
   },
   {
     index: "04",
-    title: "PARCOURS PROFESSIONNEL",
-    progress: "4/4",
+    title: "SOCLE TECHNIQUE",
+    progress: "5/5",
     rows: [
-      { index: "01", title: "IT Security Assistant — DOMPLUS Groupe (2026–auj.)", status: "Actuel" },
-      { index: "02", title: "IT Infrastructure & Security Administrator (2025–2026)", status: "Terminé" },
-      { index: "03", title: "Project & Application Manager (2023–2025)", status: "Terminé" },
-      { index: "04", title: "IT & Cloud Technician — PROWEBCE (2023)", status: "Stage" },
+      { index: "01", title: "Cybersécurité : GRC (PSSI, RGPD, ANSSI), incidents, phishing", status: "Avancé" },
+      { index: "02", title: "Développement : PHP/Laravel, Node.js, API REST, MVC", status: "Avancé" },
+      { index: "03", title: "Systèmes & Réseaux : Linux, Apache/LAMP, VMware, LAN/WAN", status: "Confirmé" },
+      { index: "04", title: "Base de données : MySQL, modélisation, optimisation", status: "Confirmé" },
+      { index: "05", title: "Outils : Linux, VS Code, SentinelOne, Sekoia", status: "Quotidien" },
     ],
     bullets: [
-      "- Mise en œuvre de la stratégie sécurité : PSSI, RGPD, ANSSI/CNIL, comités sécurité et risques tiers.",
-      "- Déploiement EDR/XDR, campagnes de phishing, sensibilisation interne et coordination SOC Orange Cyberdefense.",
-      "- Développement d’applications web (Laravel, Node.js), plateforme de ticketing from scratch, intégration API EasyRedmine et participation ERP Sage X3.",
+      "- Profil hybride développement + sécurité, orienté performance applicative et durcissement des environnements.",
+      "- Capacité à intervenir sur des enjeux techniques et stratégiques (conformité, gouvernance et architecture).",
+      "- Pratique de la collaboration transverse avec équipes infra, sécurité et métiers.",
     ],
   },
-];
+    ],
+  },
+  en: {
+    items: [
+      { id: "i", badge: "I", title: "EDUCATION", subtitle: "University / Track", rank: 3 },
+      { id: "iv", badge: "II", title: "EXPERIENCE", subtitle: "Roles / Internships", rank: 2 },
+      { id: "iii", badge: "III", title: "PROJECTS", subtitle: "Featured work", rank: 5 },
+      { id: "ii", badge: "IV", title: "SKILLS", subtitle: "Frontend / Design / UI", rank: 4 },
+    ],
+    detailsTitle: "DETAILS",
+    rankLabel: "RANK",
+    certLabel: "View certificate",
+    detailContent: [
+      {
+        index: "01",
+        title: "EDUCATION & CERTIFICATIONS",
+        progress: "5/5",
+        rows: [
+          { index: "01", title: "Master Manager in Infrastructure and Information Systems Cybersecurity — CESI (2026-2028)", status: "Upcoming" },
+          { index: "02", title: "Bachelor in Systems & Networks Administration — CESI (2025-2026)", status: "In progress" },
+          { index: "03", title: "Computer Development Degree (BAC+2) — CESI (2023-2025)", status: "120 ECTS" },
+          {
+            index: "04",
+            title: "Vocational Baccalaureate in Digital Systems — Thomas Edison High School (2020-2023)",
+            status: "Honors",
+            certUrl: "https://drive.google.com/file/d/1zSvIMhioCmwxgUhWl1z6LdgYOTI5zEo_/view?usp=sharing",
+          },
+          {
+            index: "05",
+            title: "Cybercrime Programme — United Nations (2025)",
+            status: "Certified",
+            certUrl: "https://elearningunodc.org/pluginfile.php/1/tool_certificate/issues/1765813175/1774172153MB.pdf",
+          },
+        ],
+        bullets: [
+          "- Academic focus: LAN/WAN, OSI model, Linux, VMware vSphere and project management.",
+          "- Development stack: PHP/Laravel, Node.js, SQL, Python, C, HTML/CSS/JavaScript, GitHub/GitLab.",
+          "- Training centered on infrastructure, cybersecurity and robust application delivery.",
+        ],
+      },
+      {
+        index: "02",
+        title: "PROFESSIONAL EXPERIENCE",
+        progress: "4/4",
+        rows: [
+          { index: "01", title: "IT Security Assistant — DOMPLUS Groupe (2026-present)", status: "Current" },
+          { index: "02", title: "IT Infrastructure & Security Administrator (2025-2026)", status: "Completed" },
+          { index: "03", title: "Project & Application Manager (2023-2025)", status: "Completed" },
+          { index: "04", title: "IT & Cloud Technician — PROWEBCE (2023)", status: "Internship" },
+        ],
+        bullets: [
+          "- Implemented security strategy: ISSP, GDPR, ANSSI/CNIL alignment, security committees, and third-party risk management.",
+          "- Rolled out EDR/XDR controls, phishing simulations, internal awareness sessions, and SOC coordination.",
+          "- Built web applications (Laravel, Node.js), developed ticketing from scratch, integrated EasyRedmine API, and contributed to ERP Sage X3.",
+        ],
+      },
+      {
+        index: "03",
+        title: "PROJECTS & GOALS",
+        progress: "4/4",
+        rows: [
+          { index: "01", title: "Secure user management system", status: "Project" },
+          { index: "02", title: "Ticketing platform with EasyRedmine API integration", status: "Project" },
+          { index: "03", title: "Deployment of defensive controls (EDR/XDR)", status: "Project" },
+          { index: "04", title: "Secure Laravel apps (auth, sessions, roles)", status: "Project" },
+        ],
+        bullets: [
+          "- Career target: grow into cybersecurity and infrastructure management positions.",
+          "- Focus on offensive/defensive security, system architecture, and platform scalability.",
+          "- Practical mindset: reliability, availability, compliance, and continuous improvement.",
+        ],
+      },
+      {
+        index: "04",
+        title: "TECHNICAL CORE",
+        progress: "5/5",
+        rows: [
+          { index: "01", title: "Cybersecurity: GRC (ISSP, GDPR, ANSSI), incidents, phishing", status: "Advanced" },
+          { index: "02", title: "Development: PHP/Laravel, Node.js, REST APIs, MVC", status: "Advanced" },
+          { index: "03", title: "Systems & Networks: Linux, Apache/LAMP, VMware, LAN/WAN", status: "Proficient" },
+          { index: "04", title: "Databases: MySQL, data modeling, optimization", status: "Proficient" },
+          { index: "05", title: "Tooling: Linux, VS Code, SentinelOne, Sekoia", status: "Daily use" },
+        ],
+        bullets: [
+          "- Hybrid engineering profile combining software delivery and security hardening.",
+          "- Able to operate across both technical execution and strategic governance topics.",
+          "- Comfortable collaborating with infrastructure, security, and business teams.",
+        ],
+      },
+    ],
+  },
+};
 
-export default function ResumePage({ src }) {
+export default function ResumePage({ src, lang = "fr" }) {
+  const locale = lang === "en" ? "en" : "fr";
+  const copy = RESUME_COPY[locale];
   const navigate = useNavigate();
   const [active, setActive] = useState(1);
   const [mounted, setMounted] = useState(false);
-  const currentDetail = DETAIL_CONTENT[active] ?? DETAIL_CONTENT[0];
+  const currentDetail = copy.detailContent[active] ?? copy.detailContent[0];
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 80);
@@ -102,14 +199,14 @@ export default function ResumePage({ src }) {
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "ArrowUp") setActive((i) => Math.max(0, i - 1));
-      if (e.key === "ArrowDown") setActive((i) => Math.min(ITEMS.length - 1, i + 1));
+      if (e.key === "ArrowDown") setActive((i) => Math.min(copy.items.length - 1, i + 1));
       if (e.key === "ArrowLeft") navigate(-1);
       if (e.key === "Escape" || e.key === "Backspace") navigate(-1);
     };
 
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [navigate]);
+  }, [navigate, copy.items.length]);
 
   return (
     <div id="menu-screen" className="gto-resume-screen">
@@ -505,22 +602,39 @@ export default function ResumePage({ src }) {
         }
 
         @media (max-width: 768px) {
+          .resume-overlay {
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 6vh 0 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            pointer-events: all;
+          }
           .resume-stack {
-            top: 4vh;
-            left: 4vw;
+            position: relative;
+            top: auto;
+            left: auto;
             width: 92vw;
             transform: none;
             gap: 8px;
           }
           .resume-list-tag {
-            font-size: 56px;
+            font-size: clamp(42px, 11vw, 56px);
             margin-left: 4px;
           }
           .resume-card {
-            height: 86px;
+            height: auto;
+            min-height: 96px;
           }
           .resume-card-inner {
-            padding: 10px 12px 10px 44px;
+            position: relative;
+            padding: 10px 10px 34px 44px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: start;
+            gap: 4px 8px;
           }
           .resume-badge {
             width: 40px;
@@ -531,17 +645,20 @@ export default function ResumePage({ src }) {
             font-size: 24px;
           }
           .resume-title {
-            font-size: 29px;
+            font-size: clamp(25px, 6.8vw, 33px);
             letter-spacing: 0.5px;
+            line-height: 0.92;
           }
           .resume-rank {
             gap: 6px;
+            margin-top: 0;
+            align-items: baseline;
           }
           .resume-rank-label {
-            font-size: 18px;
+            font-size: 16px;
           }
           .resume-rank-number {
-            font-size: 40px;
+            font-size: 36px;
           }
           .resume-subtitle-bar {
             left: 42px;
@@ -551,53 +668,90 @@ export default function ResumePage({ src }) {
             padding: 0 10px;
           }
           .resume-subtitle {
-            font-size: 18px;
+            font-size: clamp(14px, 4.6vw, 18px);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
           .resume-detail-panel {
-            top: 50vh;
-            left: 4vw;
+            position: relative;
+            top: auto;
+            left: auto;
             right: auto;
             width: 92vw;
             min-height: 0;
-            height: 46vh;
-            padding: 14px;
-            overflow: auto;
+            height: auto;
+            max-height: none;
+            padding: 12px;
+            overflow: visible;
           }
           .resume-detail-top {
-            grid-template-columns: 42px 1fr auto;
-            min-height: 64px;
+            grid-template-columns: 36px 1fr;
+            grid-template-areas:
+              "idx title"
+              "prog prog";
+            min-height: 72px;
             padding: 0 10px;
             gap: 8px;
+          }
+          .resume-detail-top-index {
+            grid-area: idx;
+            align-self: center;
+          }
+          .resume-detail-top-title {
+            grid-area: title;
+            align-self: center;
+            line-height: 0.95;
+          }
+          .resume-detail-top-progress {
+            grid-area: prog;
+            justify-self: end;
+            margin-top: -4px;
           }
           .resume-detail-top-index,
           .resume-detail-top-progress {
             font-size: 28px;
           }
           .resume-detail-top-title {
-            font-size: 22px;
+            font-size: 20px;
           }
           .resume-detail-list {
             gap: 6px;
             margin-top: 10px;
           }
           .resume-detail-row {
-            grid-template-columns: 34px 1fr auto;
-            min-height: 42px;
-            gap: 8px;
-            padding: 0 8px;
+            grid-template-columns: 30px 1fr;
+            grid-template-areas:
+              "index title"
+              "status status";
+            min-height: 0;
+            gap: 6px 8px;
+            padding: 8px;
+            align-items: start;
           }
           .resume-detail-row-index {
+            grid-area: index;
             font-size: 19px;
+            line-height: 1;
+            padding-top: 2px;
           }
           .resume-detail-row-title {
-            font-size: 16px;
+            grid-area: title;
+            font-size: 15px;
+            line-height: 1.16;
+            overflow-wrap: anywhere;
           }
           .resume-detail-status {
+            display: inline-flex;
+            align-items: center;
             font-size: 14px;
-            padding: 5px 8px;
+            padding: 5px 10px;
+            min-height: 28px;
           }
           .resume-detail-status-wrap {
+            grid-area: status;
             gap: 4px;
+            justify-self: end;
           }
           .resume-cert-link {
             width: 16px;
@@ -618,12 +772,52 @@ export default function ResumePage({ src }) {
           }
         }
 
+        @media (max-width: 430px) {
+          .resume-stack,
+          .resume-detail-panel {
+            width: 94vw;
+          }
+
+          .resume-card-inner {
+            padding-right: 8px;
+            padding-left: 40px;
+          }
+
+          .resume-title {
+            font-size: 24px;
+          }
+
+          .resume-rank-label {
+            font-size: 14px;
+          }
+
+          .resume-rank-number {
+            font-size: 32px;
+          }
+
+          .resume-subtitle {
+            font-size: 15px;
+          }
+
+          .resume-detail-top-title {
+            font-size: 18px;
+          }
+
+          .resume-detail-row-title {
+            font-size: 14px;
+          }
+
+          .resume-detail-status {
+            font-size: 13px;
+          }
+        }
+
       `}</style>
 
       <div className="resume-overlay">
         <div className="resume-stack">
           <div className={`resume-list-tag${mounted ? " mounted" : ""}`}>MISSIONS</div>
-          {ITEMS.map((item, index) => (
+          {copy.items.map((item, index) => (
             <div
               key={item.id}
               className={`resume-card-wrap${active === index ? " active" : ""}${mounted ? " mounted" : ""}`}
@@ -642,7 +836,7 @@ export default function ResumePage({ src }) {
                 <div className="resume-card-inner">
                   <div className="resume-title">{item.title}</div>
                   <div className="resume-rank">
-                    <div className="resume-rank-label">RANG</div>
+                    <div className="resume-rank-label">{copy.rankLabel}</div>
                     <div className="resume-rank-number">{item.rank}</div>
                   </div>
                 </div>
@@ -674,8 +868,8 @@ export default function ResumePage({ src }) {
                       href={row.certUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label="Voir le certificat"
-                      title="Voir le certificat"
+                      aria-label={copy.certLabel}
+                      title={copy.certLabel}
                     >
                       +
                     </a>
@@ -686,7 +880,7 @@ export default function ResumePage({ src }) {
           </div>
 
           <div className="resume-detail-bottom">
-            <div className="resume-detail-bottom-title">DÉTAILS</div>
+            <div className="resume-detail-bottom-title">{copy.detailsTitle}</div>
             <div className="resume-detail-bullets">
               {currentDetail.bullets.map((bullet, index) => (
                 <div className="resume-detail-bullet" key={index}>{bullet}</div>

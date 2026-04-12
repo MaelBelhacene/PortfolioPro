@@ -14,42 +14,88 @@ import mainf from "./assets/mainf.jpeg";
 const CHARS = [char1, char2, char3];
 const MAIN_IMAGES = [mainm, mainm2, mainf];
 
-const REVEAL_CONTENT = [
-  {
-    upper: [
-      "Mael Belhacene",
-      "IT Security Assistant & Développeur Web",
-      "Énergie terrain : rapide, fiable, orienté impact.",
+const ABOUT_COPY = {
+  fr: {
+    revealContent: [
+      {
+        upper: [
+          "Mael Belhacene",
+          "Globe-trotter passionné, toujours en mouvement.",
+          "J’aime le sport en général, les mangas et la découverte de nouvelles cultures.",
+        ],
+        lower: "Mes passions • Mon univers",
+      },
+      {
+        upper: [
+          "Actuellement Assistant en sécurité informatique chez DOMPLUS Groupe.",
+          "Étudiant en Bachelor Administrateur Systèmes et Réseaux au CESI.",
+          "Expertise à la croisée du développement applicatif et de la cybersécurité.",
+        ],
+        lower: "Approche : action, discipline et amélioration continue SI",
+      },
+      {
+        upper: [
+          "Objectif : évoluer vers la cybersécurité et le management d’infrastructures.",
+          "Vision orientée performance, sécurité et scalabilité.",
+          "Approche mêlant technique (dev/infra) et stratégie (GRC/conformité).",
+        ],
+        lower: "Roadmap : sécurité offensive/défensive et architecture système",
+      },
     ],
-    lower: "Voir mes projets • Me contacter",
+    footer: {
+      select: "SÉLECTIONNER",
+      show: "AFFICHER",
+      back: "RETOUR",
+    },
+    labels: ["PASSIONS", "MENTALITÉ", "OBJECTIF"],
+    roles: ["ONI", "FLUX", "OBJECTIF"],
   },
-  {
-    upper: [
-      "Actuellement Assistant en sécurité informatique chez DOMPLUS Groupe.",
-      "Étudiant en Bachelor Administrateur Systèmes et Réseaux au CESI.",
-      "Expertise à la croisée du développement applicatif et de la cybersécurité.",
+  en: {
+    revealContent: [
+      {
+        upper: [
+          "Mael Belhacene",
+          "Passionate globetrotter, always on the move.",
+          "I enjoy sports in general, manga, and discovering new cultures.",
+        ],
+        lower: "My passions • My world",
+      },
+      {
+        upper: [
+          "Currently IT Security Assistant at DOMPLUS Groupe.",
+          "Bachelor student in Systems & Networks Administration at CESI.",
+          "Expertise at the intersection of app development and cybersecurity.",
+        ],
+        lower: "Approach: action, discipline, and continuous IT improvement",
+      },
+      {
+        upper: [
+          "Goal: grow into cybersecurity and infrastructure management roles.",
+          "Vision focused on performance, security, and scalability.",
+          "Method blending technical delivery and governance strategy.",
+        ],
+        lower: "Roadmap: offensive/defensive security and system architecture",
+      },
     ],
-    lower: "Approche : action, discipline et amélioration continue SI",
+    footer: {
+      select: "SELECT",
+      show: "DISPLAY",
+      back: "BACK",
+    },
+    labels: ["PASSIONS", "MINDSET", "GOAL"],
+    roles: ["ONI", "FLOW", "GOAL"],
   },
-  {
-    upper: [
-      "Objectif : évoluer vers la cybersécurité et le management d’infrastructures.",
-      "Vision orientée performance, sécurité et scalabilité.",
-      "Approche mêlant technique (dev/infra) et stratégie (GRC/conformité).",
-    ],
-    lower: "Roadmap : sécurité offensive/défensive et architecture système",
-  },
-];
+};
 
-const ROLES = [
-  { text: "ONI", color: "#ffd230", bg: "rgba(255,210,48,0.12)", border: "rgba(255,210,48,0.5)" },
-  { text: "FLOW", color: "#d32828", bg: "rgba(211,40,40,0.12)", border: "rgba(211,40,40,0.45)" },
-  { text: "GOAL", color: "#ffd230", bg: "rgba(255,210,48,0.12)", border: "rgba(255,210,48,0.5)" },
+const BASE_ROLES = [
+  { color: "#ffd230", bg: "rgba(255,210,48,0.12)", border: "rgba(255,210,48,0.5)" },
+  { color: "#d32828", bg: "rgba(211,40,40,0.12)", border: "rgba(211,40,40,0.45)" },
+  { color: "#ffd230", bg: "rgba(255,210,48,0.12)", border: "rgba(255,210,48,0.5)" },
 ];
 
 const ITEMS = [
   {
-    id: "twitch", label: "FICHE IDENTITÉ", handle: "@mael", href: "https://twitch.tv/yourname", icon: "🎮", barIcon: icon1, bars: 1, newBars: [0], counts: ["56"],
+    id: "twitch", label: "PASSIONS", handle: "@mael", href: "https://twitch.tv/yourname", icon: "🎮", barIcon: icon1, bars: 1, newBars: [0], counts: ["56"],
     links: ["twitch.tv/videos/2041837265"],
     stats: [
       { tag: "FOL", value: "1.2K", color: "#9147ff" },
@@ -74,7 +120,11 @@ const ITEMS = [
   },
 ];
 
-export default function AboutMe() {
+export default function AboutMe({ lang = "fr" }) {
+  const locale = lang === "en" ? "en" : "fr";
+  const copy = ABOUT_COPY[locale];
+  const items = ITEMS.map((item, index) => ({ ...item, label: copy.labels[index] }));
+  const roles = BASE_ROLES.map((role, index) => ({ ...role, text: copy.roles[index] }));
   const [active, setActive]   = useState(0);
   const [mounted, setMounted] = useState(false);
   const [revealed, setRevealed] = useState(false);
@@ -93,7 +143,7 @@ export default function AboutMe() {
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "ArrowUp") setActive(i => Math.max(0, i - 1));
-      if (e.key === "ArrowDown") setActive(i => Math.min(ITEMS.length - 1, i + 1));
+      if (e.key === "ArrowDown") setActive(i => Math.min(items.length - 1, i + 1));
       if (e.key === "Enter") setRevealed(true);
       if (e.key === "ArrowRight") setRevealed(true);
       if (e.key === "ArrowLeft") {
@@ -104,7 +154,7 @@ export default function AboutMe() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [active, navigate, revealed]);
+  }, [active, navigate, revealed, items.length]);
 
   return (
     <div id="menu-screen" className="gto-about-screen">
@@ -113,11 +163,11 @@ export default function AboutMe() {
       {revealed && (
         <div key={`panel-${active}`} className={`sc-reveal-panel${mounted ? " mounted" : ""}`}>
           <div className="sc-reveal-upper-bar">
-            {REVEAL_CONTENT[active].upper.map((line) => (
+            {copy.revealContent[active].upper.map((line) => (
               <div className="sc-reveal-upper-line" key={line}>{line}</div>
             ))}
           </div>
-          <div className="sc-reveal-lower-bar">{REVEAL_CONTENT[active].lower}</div>
+          <div className="sc-reveal-lower-bar">{copy.revealContent[active].lower}</div>
         </div>
       )}
       {revealed && (
@@ -710,29 +760,54 @@ export default function AboutMe() {
             letter-spacing: 2px;
           }
           .sc-main-portrait-shell {
-            width: 56vw;
-            right: -16vw;
-            opacity: 0.78;
+            display: none;
           }
           .sc-reveal-panel {
-            top: 54vh;
-            left: -24vw;
-            width: 122vw;
-            height: 44vh;
-            transform: translateX(0) rotate(-12deg);
+            top: auto;
+            bottom: 12px;
+            left: 4vw;
+            width: 92vw;
+            height: auto;
+            min-height: 34vh;
+            max-height: 46vh;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 10px;
+            transform: none;
+            clip-path: polygon(0 0, 100% 0, calc(100% - 28px) 100%, 0 100%);
+            overflow: auto;
+          }
+          .sc-reveal-panel.mounted {
+            transform: none;
+          }
+          .sc-reveal-upper-bar,
+          .sc-reveal-lower-bar {
+            position: relative;
+            top: auto;
+            left: auto;
+            right: auto;
+            width: 100%;
+            height: auto;
+            clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+          }
+          .sc-reveal-upper-bar {
+            min-height: 62%;
+            padding: 10px;
+            gap: 8px;
           }
           .sc-reveal-upper-line {
             font-size: 13px;
             line-height: 1.2;
           }
           .sc-reveal-lower-bar {
-            width: 72%;
+            min-height: 48px;
             font-size: 13px;
             padding-left: 10px;
           }
           .sc-right-nav {
-            top: 8vh;
-            left: 4vw;
+            display: none;
           }
           .sc-right-nav .sc-nav-btn {
             font-size: 42px;
@@ -752,7 +827,7 @@ export default function AboutMe() {
       `}</style>
 
       <div className="sc-root" role="navigation">
-        {ITEMS.map((item, i) => (
+        {items.map((item, i) => (
           <div
             key={item.id}
             className={`sc-bar-outer${active === i ? " active" : ""}${mounted ? " mounted" : ""}`}
@@ -775,7 +850,7 @@ export default function AboutMe() {
               <div className="sc-bar-fill" />
               <div className="sc-bar-shade" />
               <div className="sc-bar-content">
-                <div className="sc-role">{ROLES[i].text}</div>
+                <div className="sc-role">{roles[i].text}</div>
                 <div className="sc-main">
                   <div className="sc-main-top">
                     <div className="sc-label">{item.label}</div>
@@ -788,9 +863,9 @@ export default function AboutMe() {
       </div>
 
       <div className={`sc-footer${mounted ? " mounted" : ""}`}>
-        <div className="sc-footer-row"><span className="sc-footer-key">↑↓</span><span>SÉLECTIONNER</span></div>
-        <div className="sc-footer-row"><span className="sc-footer-key">↵</span><span>AFFICHER</span></div>
-        <div className="sc-footer-row"><span className="sc-footer-key">ESC</span><span>RETOUR</span></div>
+        <div className="sc-footer-row"><span className="sc-footer-key">↑↓</span><span>{copy.footer.select}</span></div>
+        <div className="sc-footer-row"><span className="sc-footer-key">↵</span><span>{copy.footer.show}</span></div>
+        <div className="sc-footer-row"><span className="sc-footer-key">ESC</span><span>{copy.footer.back}</span></div>
       </div>
     </div>
   );
