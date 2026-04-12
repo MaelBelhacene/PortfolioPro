@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import char1 from "./assets/char1.png";
 import char2 from "./assets/char2.png";
 import char3 from "./assets/char3.png";
-import bgVideo from "./assets/gto.mp4";
+import bgVideo from "./assets/socials.mp4";
 import newsign from "./assets/newsign.png";
 
 const SOCIALS_COPY = {
@@ -99,8 +99,14 @@ export default function Socials({ lang = "fr" }) {
 
   return (
     <div id="menu-screen" className="gto-social-screen">
-      <video src={bgVideo} autoPlay loop muted playsInline />
+      <video src={bgVideo} autoPlay loop muted playsInline preload="auto" className="sc-bg-video" />
       <style>{`
+        .sc-bg-video {
+          object-position: center center;
+          filter: saturate(1.05) contrast(1.04) brightness(0.96);
+          transform: scale(1.01);
+          transform-origin: center;
+        }
         .sc-root {
           position: absolute;
           inset: 0;
@@ -120,7 +126,7 @@ export default function Socials({ lang = "fr" }) {
           pointer-events: none;
           background: repeating-linear-gradient(
             -10deg,
-            rgba(255, 210, 48, 0.04) 0 8px,
+            rgba(255, 210, 48, 0.02) 0 8px,
             rgba(0, 0, 0, 0) 8px 22px
           );
           mix-blend-mode: soft-light;
@@ -486,7 +492,7 @@ export default function Socials({ lang = "fr" }) {
           z-index: 11;
           background: repeating-linear-gradient(
             -12deg,
-            rgba(255, 210, 48, 0.06) 0 10px,
+            rgba(255, 210, 48, 0.03) 0 10px,
             rgba(0, 0, 0, 0) 10px 26px
           );
           mix-blend-mode: soft-light;
