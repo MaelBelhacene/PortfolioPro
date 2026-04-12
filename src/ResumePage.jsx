@@ -5,10 +5,10 @@ import gtoTransitionVideo from "./assets/gto-transition.mp4";
 const RESUME_COPY = {
   fr: {
     items: [
-      { id: "i", badge: "I", title: "FORMATION", subtitle: "Université / Cursus", rank: 3 },
-      { id: "iv", badge: "II", title: "EXPÉRIENCE", subtitle: "Stages / Rôles", rank: 2 },
+      { id: "i", badge: "I", title: "FORMATION", subtitle: "École supérieure / Cursus", rank: 3 },
+      { id: "iv", badge: "II", title: "EXPÉRIENCE", subtitle: "Alternance / Rôles", rank: 2 },
       { id: "iii", badge: "III", title: "PROJETS", subtitle: "Travaux mis en avant", rank: 5 },
-      { id: "ii", badge: "IV", title: "COMPÉTENCES", subtitle: "Frontend / Design / UI", rank: 4 },
+      { id: "ii", badge: "IV", title: "COMPÉTENCES", subtitle: "Cybersécurité / Développement / Gestion de projet", rank: 4 },
     ],
     detailsTitle: "DÉTAILS",
     rankLabel: "RANG",
@@ -78,10 +78,10 @@ const RESUME_COPY = {
     title: "SOCLE TECHNIQUE",
     progress: "5/5",
     rows: [
-      { index: "01", title: "Cybersécurité : GRC (PSSI, RGPD, ANSSI), incidents, phishing", status: "Avancé" },
-      { index: "02", title: "Développement : PHP/Laravel, Node.js, API REST, MVC", status: "Avancé" },
-      { index: "03", title: "Systèmes & Réseaux : Linux, Apache/LAMP, VMware, LAN/WAN", status: "Confirmé" },
-      { index: "04", title: "Base de données : MySQL, modélisation, optimisation", status: "Confirmé" },
+      { index: "01", title: "Cybersécurité : GRC/SOC (PSSI, RGPD, ANSSI), incidents, phishing", status: "Avancé" },
+      { index: "02", title: "Développement : PHP/Laravel, Node.js, API REST, MVC, BDD", status: "Avancé" },
+      { index: "03", title: "Systèmes & Réseaux : Linux, VMware, LAN/WAN", status: "Confirmé" },
+      { index: "04", title: "Gestion de projet : Méthodes agiles, Scrum, Kanban", status: "Confirmé" },
       { index: "05", title: "Outils : Linux, VS Code, SentinelOne, Sekoia", status: "Quotidien" },
     ],
     bullets: [
@@ -167,10 +167,10 @@ const RESUME_COPY = {
         title: "TECHNICAL CORE",
         progress: "5/5",
         rows: [
-          { index: "01", title: "Cybersecurity: GRC (ISSP, GDPR, ANSSI), incidents, phishing", status: "Advanced" },
-          { index: "02", title: "Development: PHP/Laravel, Node.js, REST APIs, MVC", status: "Advanced" },
-          { index: "03", title: "Systems & Networks: Linux, Apache/LAMP, VMware, LAN/WAN", status: "Proficient" },
-          { index: "04", title: "Databases: MySQL, data modeling, optimization", status: "Proficient" },
+          { index: "01", title: "Cybersecurity: GRC/SOC (ISSP, GDPR, ANSSI), incident response, phishing", status: "Advanced" },
+          { index: "02", title: "Development: PHP/Laravel, Node.js, REST APIs, MVC, databases", status: "Advanced" },
+          { index: "03", title: "Systems & Networks: Linux, VMware, LAN/WAN", status: "Proficient" },
+          { index: "04", title: "Project management: Agile methods, Scrum, Kanban", status: "Proficient" },
           { index: "05", title: "Tooling: Linux, VS Code, SentinelOne, Sekoia", status: "Daily use" },
         ],
         bullets: [
