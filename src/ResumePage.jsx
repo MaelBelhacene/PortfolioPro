@@ -6,9 +6,9 @@ const RESUME_COPY = {
   fr: {
     items: [
       { id: "i", badge: "I", title: "FORMATION", subtitle: "École supérieure / Cursus", rank: 3 },
-      { id: "iv", badge: "II", title: "EXPÉRIENCE", subtitle: "Alternance / Rôles", rank: 2 },
+      { id: "iv", badge: "II", title: "EXPÉRIENCE", subtitle: "Alternance / Missions", rank: 2 },
       { id: "iii", badge: "III", title: "PROJETS", subtitle: "Travaux mis en avant", rank: 5 },
-      { id: "ii", badge: "IV", title: "COMPÉTENCES", subtitle: "Cybersécurité / Développement / Gestion de projet", rank: 4 },
+      { id: "ii", badge: "IV", title: "COMPÉTENCES", subtitle: "Cybersécurité / Infra / Développement", rank: 4 },
     ],
     detailsTitle: "DÉTAILS",
     rankLabel: "RANG",
@@ -68,9 +68,9 @@ const RESUME_COPY = {
       { index: "04", title: "Applications Laravel sécurisées (auth, sessions, rôles)", status: "Projet" },
     ],
     bullets: [
-      "- Objectif : évoluer vers un poste en cybersécurité et management des infrastructures IT.",
+      "- Actuellement en poste et en alternance jusqu'en 2028, non en recherche active.",
       "- Orientation sécurité offensive/défensive, architecture système et scalabilité des plateformes.",
-      "- Approche pragmatique : fiabilité, disponibilité, conformité et amélioration continue.",
+      "- Ouvert aux échanges techniques et collaborations ciblées.",
     ],
   },
   {
@@ -97,7 +97,7 @@ const RESUME_COPY = {
       { id: "i", badge: "I", title: "EDUCATION", subtitle: "University / Track", rank: 3 },
       { id: "iv", badge: "II", title: "EXPERIENCE", subtitle: "Roles / Internships", rank: 2 },
       { id: "iii", badge: "III", title: "PROJECTS", subtitle: "Featured work", rank: 5 },
-      { id: "ii", badge: "IV", title: "SKILLS", subtitle: "Frontend / Design / UI", rank: 4 },
+      { id: "ii", badge: "IV", title: "SKILLS", subtitle: "Cybersecurity / Infrastructure / Development", rank: 4 },
     ],
     detailsTitle: "DETAILS",
     rankLabel: "RANK",
@@ -157,9 +157,9 @@ const RESUME_COPY = {
           { index: "04", title: "Secure Laravel apps (auth, sessions, roles)", status: "Project" },
         ],
         bullets: [
-          "- Career target: grow into cybersecurity and infrastructure management positions.",
+          "- Currently employed and in work-study until 2028, not actively job-seeking.",
           "- Focus on offensive/defensive security, system architecture, and platform scalability.",
-          "- Practical mindset: reliability, availability, compliance, and continuous improvement.",
+          "- Open to technical discussions and selected collaborations.",
         ],
       },
       {
