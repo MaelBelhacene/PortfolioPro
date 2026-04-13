@@ -21,7 +21,7 @@ const RESUME_COPY = {
     rows: [
       { index: "01", title: "Master Manager en Infrastructures et Cybersécurité des SI — CESI (2026–2028)", status: "À venir" },
       { index: "02", title: "Bachelor Administrateur Systèmes & Réseaux — CESI (2025–2026)", status: "En cours" },
-      { index: "03", title: "Développement Informatique BAC+2 — CESI (2023–2025)", status: "120 ECTS" },
+      { index: "03", title: "Développement Informatique BAC+2 — CESI (2023–2025)", status: "Obtenu" },
       {
         index: "04",
         title: "Bac Pro Systèmes Numériques — Lycée Thomas Edison (2020–2023)",
@@ -110,7 +110,7 @@ const RESUME_COPY = {
         rows: [
           { index: "01", title: "Master Manager in Infrastructure and Information Systems Cybersecurity — CESI (2026-2028)", status: "Upcoming" },
           { index: "02", title: "Bachelor in Systems & Networks Administration — CESI (2025-2026)", status: "In progress" },
-          { index: "03", title: "Computer Development Degree (BAC+2) — CESI (2023-2025)", status: "120 ECTS" },
+          { index: "03", title: "Computer Development Degree (BAC+2) — CESI (2023-2025)", status: "earned" },
           {
             index: "04",
             title: "Vocational Baccalaureate in Digital Systems — Thomas Edison High School (2020-2023)",
