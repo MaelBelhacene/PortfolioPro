@@ -5,10 +5,10 @@ import gtoTransitionVideo from "./assets/gto-transition.mp4";
 const RESUME_COPY = {
   fr: {
     items: [
-      { id: "i", badge: "I", title: "FORMATION", subtitle: "Université / Cursus", rank: 3 },
-      { id: "iv", badge: "II", title: "EXPÉRIENCE", subtitle: "Stages / Rôles", rank: 2 },
+      { id: "i", badge: "I", title: "FORMATION", subtitle: "École supérieure / Cursus", rank: 3 },
+      { id: "iv", badge: "II", title: "EXPÉRIENCE", subtitle: "Alternance / Missions", rank: 2 },
       { id: "iii", badge: "III", title: "PROJETS", subtitle: "Travaux mis en avant", rank: 5 },
-      { id: "ii", badge: "IV", title: "COMPÉTENCES", subtitle: "Frontend / Design / UI", rank: 4 },
+      { id: "ii", badge: "IV", title: "COMPÉTENCES", subtitle: "Cybersécurité / Infra / Développement", rank: 4 },
     ],
     detailsTitle: "DÉTAILS",
     rankLabel: "RANG",
@@ -21,7 +21,7 @@ const RESUME_COPY = {
     rows: [
       { index: "01", title: "Master Manager en Infrastructures et Cybersécurité des SI — CESI (2026–2028)", status: "À venir" },
       { index: "02", title: "Bachelor Administrateur Systèmes & Réseaux — CESI (2025–2026)", status: "En cours" },
-      { index: "03", title: "Développement Informatique BAC+2 — CESI (2023–2025)", status: "120 ECTS" },
+      { index: "03", title: "Développement Informatique BAC+2 — CESI (2023–2025)", status: "Obtenu" },
       {
         index: "04",
         title: "Bac Pro Systèmes Numériques — Lycée Thomas Edison (2020–2023)",
@@ -68,9 +68,9 @@ const RESUME_COPY = {
       { index: "04", title: "Applications Laravel sécurisées (auth, sessions, rôles)", status: "Projet" },
     ],
     bullets: [
-      "- Objectif : évoluer vers un poste en cybersécurité et management des infrastructures IT.",
+      "- Actuellement en poste et en alternance jusqu'en 2028, non en recherche active.",
       "- Orientation sécurité offensive/défensive, architecture système et scalabilité des plateformes.",
-      "- Approche pragmatique : fiabilité, disponibilité, conformité et amélioration continue.",
+      "- Ouvert aux échanges techniques et collaborations ciblées.",
     ],
   },
   {
@@ -78,10 +78,10 @@ const RESUME_COPY = {
     title: "SOCLE TECHNIQUE",
     progress: "5/5",
     rows: [
-      { index: "01", title: "Cybersécurité : GRC (PSSI, RGPD, ANSSI), incidents, phishing", status: "Avancé" },
-      { index: "02", title: "Développement : PHP/Laravel, Node.js, API REST, MVC", status: "Avancé" },
-      { index: "03", title: "Systèmes & Réseaux : Linux, Apache/LAMP, VMware, LAN/WAN", status: "Confirmé" },
-      { index: "04", title: "Base de données : MySQL, modélisation, optimisation", status: "Confirmé" },
+      { index: "01", title: "Cybersécurité : GRC/SOC (PSSI, RGPD, ANSSI), incidents, phishing", status: "Avancé" },
+      { index: "02", title: "Développement : PHP/Laravel, Node.js, API REST, MVC, BDD", status: "Avancé" },
+      { index: "03", title: "Systèmes & Réseaux : Linux, VMware, LAN/WAN", status: "Confirmé" },
+      { index: "04", title: "Gestion de projet : Méthodes agiles, Scrum, Kanban", status: "Confirmé" },
       { index: "05", title: "Outils : Linux, VS Code, SentinelOne, Sekoia", status: "Quotidien" },
     ],
     bullets: [
@@ -97,7 +97,7 @@ const RESUME_COPY = {
       { id: "i", badge: "I", title: "EDUCATION", subtitle: "University / Track", rank: 3 },
       { id: "iv", badge: "II", title: "EXPERIENCE", subtitle: "Roles / Internships", rank: 2 },
       { id: "iii", badge: "III", title: "PROJECTS", subtitle: "Featured work", rank: 5 },
-      { id: "ii", badge: "IV", title: "SKILLS", subtitle: "Frontend / Design / UI", rank: 4 },
+      { id: "ii", badge: "IV", title: "SKILLS", subtitle: "Cybersecurity / Infrastructure / Development", rank: 4 },
     ],
     detailsTitle: "DETAILS",
     rankLabel: "RANK",
@@ -110,7 +110,7 @@ const RESUME_COPY = {
         rows: [
           { index: "01", title: "Master Manager in Infrastructure and Information Systems Cybersecurity — CESI (2026-2028)", status: "Upcoming" },
           { index: "02", title: "Bachelor in Systems & Networks Administration — CESI (2025-2026)", status: "In progress" },
-          { index: "03", title: "Computer Development Degree (BAC+2) — CESI (2023-2025)", status: "120 ECTS" },
+          { index: "03", title: "Computer Development Degree (BAC+2) — CESI (2023-2025)", status: "earned" },
           {
             index: "04",
             title: "Vocational Baccalaureate in Digital Systems — Thomas Edison High School (2020-2023)",
@@ -157,9 +157,9 @@ const RESUME_COPY = {
           { index: "04", title: "Secure Laravel apps (auth, sessions, roles)", status: "Project" },
         ],
         bullets: [
-          "- Career target: grow into cybersecurity and infrastructure management positions.",
+          "- Currently employed and in work-study until 2028, not actively job-seeking.",
           "- Focus on offensive/defensive security, system architecture, and platform scalability.",
-          "- Practical mindset: reliability, availability, compliance, and continuous improvement.",
+          "- Open to technical discussions and selected collaborations.",
         ],
       },
       {
@@ -167,10 +167,10 @@ const RESUME_COPY = {
         title: "TECHNICAL CORE",
         progress: "5/5",
         rows: [
-          { index: "01", title: "Cybersecurity: GRC (ISSP, GDPR, ANSSI), incidents, phishing", status: "Advanced" },
-          { index: "02", title: "Development: PHP/Laravel, Node.js, REST APIs, MVC", status: "Advanced" },
-          { index: "03", title: "Systems & Networks: Linux, Apache/LAMP, VMware, LAN/WAN", status: "Proficient" },
-          { index: "04", title: "Databases: MySQL, data modeling, optimization", status: "Proficient" },
+          { index: "01", title: "Cybersecurity: GRC/SOC (ISSP, GDPR, ANSSI), incident response, phishing", status: "Advanced" },
+          { index: "02", title: "Development: PHP/Laravel, Node.js, REST APIs, MVC, databases", status: "Advanced" },
+          { index: "03", title: "Systems & Networks: Linux, VMware, LAN/WAN", status: "Proficient" },
+          { index: "04", title: "Project management: Agile methods, Scrum, Kanban", status: "Proficient" },
           { index: "05", title: "Tooling: Linux, VS Code, SentinelOne, Sekoia", status: "Daily use" },
         ],
         bullets: [

@@ -12,6 +12,7 @@ const SOCIALS_COPY = {
     selectLink: "Selectionner lien",
     itemOpen: "Ouvrir",
     itemSelect: "Selectionner",
+    contactLine: "mailto:maelbelhacene38.pro@gmail.com - En poste jusqu'en 2028 (alternance), ouvert aux echanges techniques/collaborations ciblees",
     footer: { select: "SÉLECTIONNER", open: "OUVRIR", back: "RETOUR" },
   },
   en: {
@@ -19,6 +20,7 @@ const SOCIALS_COPY = {
     selectLink: "Select link",
     itemOpen: "Open",
     itemSelect: "Select",
+    contactLine: "mailto:maelbelhacene38.pro@gmail.com - Employed until 2028 (work-study), open to technical discussions/selected collaborations",
     footer: { select: "SELECT", open: "OPEN", back: "BACK" },
   },
 };
@@ -53,8 +55,9 @@ export default function Socials({ lang = "fr" }) {
     () => ITEMS.map((item, index) => ({
       ...item,
       label: copy.labels[index],
+      links: item.id === "tiktok" ? [copy.contactLine] : item.links,
     })),
-    [copy.labels],
+    [copy.labels, copy.contactLine],
   );
   const [active, setActive]               = useState(0);
   const [mounted, setMounted]             = useState(false);
