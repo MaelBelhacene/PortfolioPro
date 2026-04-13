@@ -69,6 +69,7 @@ Projet en production, déployé sur Vercel.
 * GitHub : https://github.com/MaelBelhacene
 * LinkedIn : https://www.linkedin.com/in/mael-belhacene-89545b294/
 * Contact : [maelbelhacene38.pro@gmail.com](mailto:maelbelhacene38.pro@gmail.com)
+* [Inspired by blairxu13/persona3-website](https://github.com/blairxu13/persona3-website)
 
 ---
 
