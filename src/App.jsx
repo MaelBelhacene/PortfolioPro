@@ -89,6 +89,9 @@ function MusicToggle() {
       return
     }
 
+    // OFF -> ON must always restart from the beginning.
+    audio.currentTime = 0
+
     const playPromise = audio.play()
     if (playPromise?.catch) {
       playPromise.catch(() => {
@@ -112,28 +115,7 @@ function MusicToggle() {
   }, [enabled, location.pathname])
 
   function handleMusicToggle() {
-    const audio = audioRef.current ?? getSharedMusicAudio()
-    if (!audio) {
-      setEnabled((v) => !v)
-      return
-    }
-
-    if (enabled) {
-      audio.pause()
-      setEnabled(false)
-      return
-    }
-
-    const playPromise = audio.play()
-
-    if (playPromise?.then) {
-      playPromise
-        .then(() => setEnabled(true))
-        .catch(() => setEnabled(false))
-      return
-    }
-
-    setEnabled(true)
+    setEnabled((v) => !v)
   }
 
   return (
