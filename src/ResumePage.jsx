@@ -602,9 +602,18 @@ export default function ResumePage({ src, lang = "fr" }) {
         }
 
         @media (max-width: 768px) {
-          .resume-overlay {
+          .gto-resume-screen {
+            height: auto;
+            min-height: 100dvh;
             overflow-y: auto;
-            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+          }
+          .resume-overlay {
+            position: relative;
+            inset: auto;
+            min-height: 100dvh;
+            height: auto;
+            overflow: visible;
             padding: 6vh 0 16px;
             display: flex;
             flex-direction: column;
@@ -684,6 +693,7 @@ export default function ResumePage({ src, lang = "fr" }) {
             max-height: none;
             padding: 12px;
             overflow: visible;
+            margin-bottom: max(16px, env(safe-area-inset-bottom));
           }
           .resume-detail-top {
             grid-template-columns: 36px 1fr;
